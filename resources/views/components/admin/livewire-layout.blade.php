@@ -537,30 +537,40 @@
 
         /* Action buttons in table */
         .action-btn {
-            background: transparent;
-            border: none;
-            width: 34px;
-            height: 34px;
-            padding: 0;
-            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-light);
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            gap: 4px;
         }
 
         .action-btn:hover {
-            background: var(--hover-bg);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .action-btn-edit {
             color: var(--primary-color);
         }
 
+        .action-btn-edit:hover {
+            background: rgba(212, 96, 138, 0.1);
+            border-color: var(--primary-light);
+        }
+
         .action-btn-delete {
             color: var(--danger-color);
+        }
+
+        .action-btn-delete:hover {
+            background: rgba(212, 93, 93, 0.1);
+            border-color: var(--danger-color);
         }
 
         /* Pagination */
