@@ -69,14 +69,14 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="d-flex gap-1">
+                                <div class="d-flex gap-2">
                                     <button class="action-btn action-btn-edit" wire:click="openEditModal({{ $user->id }})"
                                         title="Edit user">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit"></i> Edit
                                     </button>
                                     <button class="action-btn action-btn-delete" wire:click="confirmDelete({{ $user->id }})"
-                                        title="Delete user">
-                                        <i class="fas fa-trash-alt"></i>
+                                        title="Hapus user">
+                                        <i class="fas fa-trash-alt"></i> Hapus
                                     </button>
                                 </div>
                             </td>
@@ -173,15 +173,9 @@
     @endif
 
     {{-- Delete Confirmation Modal --}}
-    <x-admin.confirm-modal
-        :show="$showDeleteModal"
-        title="Confirm Delete"
-        message="Are you sure you want to delete this user? This action cannot be undone."
-        on-confirm="deleteUser"
-        on-cancel="cancelDelete"
-        variant="danger"
-        icon="fas fa-exclamation-triangle"
-    >
+    <x-admin.confirm-modal :show="$showDeleteModal" title="Confirm Delete"
+        message="Are you sure you want to delete this user? This action cannot be undone." on-confirm="deleteUser"
+        on-cancel="cancelDelete" variant="danger" icon="fas fa-exclamation-triangle">
         <x-slot:confirmButton>
             <i class="fas fa-trash-alt me-2"></i>Delete User
         </x-slot:confirmButton>
