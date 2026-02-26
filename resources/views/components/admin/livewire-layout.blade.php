@@ -12,45 +12,46 @@
     <title>{{ $title }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     @livewireStyles
     <style>
         :root {
             --sidebar-width: 280px;
             --topbar-height: 70px;
-            --primary-color: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --secondary-color: #0ea5e9;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --card-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --primary-color: #d4608a;
+            --primary-dark: #b8496f;
+            --primary-light: #e8a0b8;
+            --secondary-color: #c27894;
+            --success-color: #5cad8a;
+            --warning-color: #d4a04e;
+            --danger-color: #d45d5d;
+            --card-shadow: 0 1px 4px rgba(180,100,130,0.08), 0 1px 2px rgba(180,100,130,0.06);
 
             /* Light theme (default) */
-            --bg-primary: #f1f5f9;
+            --bg-primary: #faf5f7;
             --bg-secondary: #ffffff;
-            --bg-tertiary: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border-color: #e2e8f0;
-            --border-light: #f1f5f9;
+            --bg-tertiary: #fdf0f4;
+            --text-primary: #3d2b33;
+            --text-secondary: #7a6069;
+            --text-muted: #a99099;
+            --border-color: #f0dce3;
+            --border-light: #f8edf1;
             --input-bg: #ffffff;
-            --hover-bg: #f8fafc;
+            --hover-bg: #fdf5f8;
         }
 
         [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --border-light: #475569;
-            --input-bg: #1e293b;
-            --hover-bg: #334155;
-            --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.4);
+            --bg-primary: #1a1215;
+            --bg-secondary: #261b20;
+            --bg-tertiary: #33252b;
+            --text-primary: #f5eaee;
+            --text-secondary: #c8b0b8;
+            --text-muted: #9a8089;
+            --border-color: #3d2d33;
+            --border-light: #4a363e;
+            --input-bg: #261b20;
+            --hover-bg: #33252b;
+            --card-shadow: 0 1px 4px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25);
         }
 
         * {
@@ -60,7 +61,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -183,12 +184,12 @@
         }
 
         .modern-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(180,100,130,0.12);
             transform: translateY(-2px);
         }
 
         [data-theme="dark"] .modern-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
 
         .stat-card {
@@ -213,12 +214,12 @@
         }
 
         .stat-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(180,100,130,0.12);
             transform: translateY(-4px);
         }
 
         [data-theme="dark"] .stat-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
 
         .stat-icon {
@@ -280,7 +281,7 @@
         .btn-primary-modern:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 12px rgba(212, 96, 138, 0.35);
         }
 
         .alert-modern {
@@ -492,7 +493,7 @@
             background: var(--input-bg);
             border-color: var(--primary-color);
             color: var(--text-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 96, 138, 0.12);
         }
 
         .form-control::placeholder {
