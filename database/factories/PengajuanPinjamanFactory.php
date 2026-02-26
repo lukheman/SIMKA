@@ -23,7 +23,7 @@ class PengajuanPinjamanFactory extends Factory
             'jumlah_disetujui' => $this->faker->randomFloat(2, 1000000, 50000000),
             'tenor_bulan' => $this->faker->numberBetween(6, 60),
             'bunga_total' => $this->faker->randomFloat(2, 50000, 5000000),
-            'status' => $this->faker->randomElement(['pending', 'disetujui', 'ditolak', 'lunas']),
+            'status' => $this->faker->randomElement(\App\Enum\StatusPengajuan::values()),
             'tgl_pengajuan' => $this->faker->date(),
             'tgl_cair' => $this->faker->optional()->date(),
             'alasan_tolak' => $this->faker->optional()->sentence(),

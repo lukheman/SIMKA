@@ -14,6 +14,13 @@ class PengajuanPinjaman extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return [
+            'status' => \App\Enum\StatusPengajuan::class,
+        ];
+    }
+
     public function anggota()
     {
         return $this->belongsTo(Anggota::class);

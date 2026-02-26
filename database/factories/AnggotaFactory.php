@@ -25,7 +25,7 @@ class AnggotaFactory extends Factory
             'pekerjaan' => $this->faker->jobTitle(),
             'no_telp' => $this->faker->phoneNumber(),
             'tgl_bergabung' => $this->faker->date(),
-            'status_aktif' => $this->faker->randomElement(['aktif', 'pasif', 'keluar']),
+            'status_aktif' => $this->faker->randomElement(\App\Enum\StatusAktif::values()),
         ];
     }
 }

@@ -20,7 +20,7 @@ class TransaksiSimpananFactory extends Factory
             'anggota_id' => \App\Models\Anggota::factory(),
             'jenis_simpanan_id' => \App\Models\JenisSimpanan::factory(),
             'kode_transaksi' => $this->faker->unique()->numerify('TRX-S-######'),
-            'tipe_transaksi' => $this->faker->randomElement(['setor', 'tarik']),
+            'tipe_transaksi' => $this->faker->randomElement(\App\Enum\TipeTransaksi::values()),
             'jumlah' => $this->faker->randomFloat(2, 50000, 5000000),
             'tgl_transaksi' => $this->faker->date(),
             'keterangan' => $this->faker->sentence(),

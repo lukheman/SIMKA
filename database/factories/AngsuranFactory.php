@@ -25,7 +25,7 @@ class AngsuranFactory extends Factory
             'jumlah_bunga' => $this->faker->randomFloat(2, 10000, 100000),
             'denda' => $this->faker->randomFloat(2, 0, 50000),
             'total_bayar' => $this->faker->optional()->randomFloat(2, 110000, 1150000),
-            'status_bayar' => $this->faker->randomElement(['belum', 'lunas']),
+            'status_bayar' => $this->faker->randomElement(\App\Enum\StatusBayar::values()),
         ];
     }
 }

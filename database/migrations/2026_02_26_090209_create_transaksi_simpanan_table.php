@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('anggota_id')->constrained('anggota')->cascadeOnDelete();
             $table->foreignId('jenis_simpanan_id')->constrained('jenis_simpanan')->cascadeOnDelete();
             $table->string('kode_transaksi')->unique();
-            $table->enum('tipe_transaksi', ['setor', 'tarik']);
+            $table->enum('tipe_transaksi', \App\Enum\TipeTransaksi::values());
             $table->decimal('jumlah', 15, 2);
             $table->date('tgl_transaksi');
             $table->text('keterangan')->nullable();

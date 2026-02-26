@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->decimal('jumlah_bunga', 15, 2);
             $table->decimal('denda', 15, 2)->default(0);
             $table->decimal('total_bayar', 15, 2)->nullable();
-            $table->enum('status_bayar', ['belum', 'lunas'])->default('belum');
+            $table->enum('status_bayar', \App\Enum\StatusBayar::values())->default(\App\Enum\StatusBayar::BELUM->value);
             $table->timestamps();
         });
     }

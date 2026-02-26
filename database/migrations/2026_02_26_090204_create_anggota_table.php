@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('pekerjaan');
             $table->string('no_telp');
             $table->date('tgl_bergabung');
-            $table->enum('status_aktif', ['aktif', 'pasif', 'keluar'])->default('aktif');
+            $table->enum('status_aktif', \App\Enum\StatusAktif::values())->default(\App\Enum\StatusAktif::AKTIF->value);
             $table->timestamps();
         });
     }

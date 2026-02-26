@@ -14,6 +14,13 @@ class Angsuran extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return [
+            'status_bayar' => \App\Enum\StatusBayar::class,
+        ];
+    }
+
     public function pengajuanPinjaman()
     {
         return $this->belongsTo(PengajuanPinjaman::class);

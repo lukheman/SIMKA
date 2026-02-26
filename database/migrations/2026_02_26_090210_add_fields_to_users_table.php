@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->unique()->nullable();
-            $table->enum('role', ['admin', 'anggota', 'pimpinan'])->default('anggota');
+            $table->enum('role', \App\Enum\UserRole::values())->default(\App\Enum\UserRole::ANGGOTA->value);
         });
     }
 

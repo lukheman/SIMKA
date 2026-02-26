@@ -14,6 +14,13 @@ class Anggota extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return [
+            'status_aktif' => \App\Enum\StatusAktif::class,
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

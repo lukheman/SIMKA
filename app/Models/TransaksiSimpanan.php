@@ -14,6 +14,13 @@ class TransaksiSimpanan extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return [
+            'tipe_transaksi' => \App\Enum\TipeTransaksi::class,
+        ];
+    }
+
     public function anggota()
     {
         return $this->belongsTo(Anggota::class);

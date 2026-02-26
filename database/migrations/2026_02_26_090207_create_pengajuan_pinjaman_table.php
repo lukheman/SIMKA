@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->decimal('jumlah_disetujui', 15, 2)->nullable();
             $table->integer('tenor_bulan');
             $table->decimal('bunga_total', 15, 2);
-            $table->enum('status', ['pending', 'disetujui', 'ditolak', 'lunas'])->default('pending');
+            $table->enum('status', \App\Enum\StatusPengajuan::values())->default(\App\Enum\StatusPengajuan::PENDING->value);
             $table->date('tgl_pengajuan');
             $table->date('tgl_cair')->nullable();
             $table->text('alasan_tolak')->nullable();
