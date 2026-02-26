@@ -574,9 +574,6 @@
             <x-admin.sidebar-link href="#settings" icon="fas fa-cog">Settings</x-admin.sidebar-link>
         </x-admin.sidebar-section>
 
-        <x-admin.sidebar-section title="Developer">
-            <x-admin.sidebar-link href="{{ route('admin.components') }}" icon="fas fa-cubes" :active="request()->routeIs('admin.components')">Components</x-admin.sidebar-link>
-        </x-admin.sidebar-section>
     </x-admin.sidebar>
 
     <!-- Main Content -->

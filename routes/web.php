@@ -21,6 +21,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/users', UserManagement::class)->name('admin.users');
     Route::get('/profile', Profile::class)->name('admin.profile');
-    Route::get('/components', ComponentDocs::class)->name('admin.components');
     Route::post('/logout', [LogoutController::class, '__invoke'])->name('logout');
 });
