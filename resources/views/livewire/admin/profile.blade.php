@@ -337,7 +337,6 @@
                         </div>
 
                         <x-admin.alert variant="info" class="mb-3">
-                            <i class="fas fa-info-circle me-2"></i>
                             Password minimal 8 karakter, mengandung huruf dan angka.
                         </x-admin.alert>
 
