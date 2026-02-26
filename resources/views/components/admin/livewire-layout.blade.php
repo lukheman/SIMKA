@@ -564,6 +564,15 @@
             border-color: var(--primary-light);
         }
 
+        .action-btn-view {
+            color: var(--secondary-color);
+        }
+
+        .action-btn-view:hover {
+            background: rgba(194, 120, 148, 0.1);
+            border-color: var(--secondary-color);
+        }
+
         .action-btn-delete {
             color: var(--danger-color);
         }
