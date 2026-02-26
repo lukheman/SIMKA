@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Livewire\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
-class DashboardController extends Controller
+#[Layout('components.admin.livewire-layout')]
+#[Title('Dashboard Overview')]
+class Dashboard extends Component
 {
-    /**
-     * Display the admin dashboard
-     */
-    public function index()
+    public function render()
     {
-        // Sample data for orders table
         $orders = collect([
             (object) [
                 'order_id' => '#ORD-2024',
@@ -56,6 +55,8 @@ class DashboardController extends Controller
             ],
         ]);
 
-        return view('admin.dashboard', compact('orders'));
+        return view('livewire.admin.dashboard', [
+            'orders' => $orders
+        ]);
     }
 }
