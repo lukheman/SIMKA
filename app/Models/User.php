@@ -24,6 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'username',
+        'role',
     ];
 
     /**
@@ -78,5 +80,13 @@ class User extends Authenticatable
     public function hasAvatar(): bool
     {
         return !empty($this->avatar);
+    }
+
+    /**
+     * Get the anggota associated with the user.
+     */
+    public function anggota()
+    {
+        return $this->hasOne(Anggota::class);
     }
 }

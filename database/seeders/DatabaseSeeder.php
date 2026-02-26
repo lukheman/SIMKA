@@ -18,7 +18,17 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => 'password123'
+            'password' => 'password123',
+            'role' => 'admin',
+        ]);
+
+        $this->call([
+            AnggotaSeeder::class,
+            JenisSimpananSeeder::class,
+            TransaksiSimpananSeeder::class,
+            JenisPinjamanSeeder::class,
+            PengajuanPinjamanSeeder::class,
+            AngsuranSeeder::class,
         ]);
     }
 }
