@@ -176,28 +176,29 @@
 
         .modern-card {
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.75rem;
             box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             border: 1px solid var(--border-light);
+            border-top: 3px solid var(--primary-light);
         }
 
         .modern-card:hover {
-            box-shadow: 0 10px 30px rgba(180,100,130,0.12);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(180,100,130,0.10);
+            transform: translateY(-3px);
         }
 
         [data-theme="dark"] .modern-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         .stat-card {
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.75rem;
             box-shadow: var(--card-shadow);
-            transition: all 0.3s;
+            transition: all 0.25s;
             border: 1px solid var(--border-light);
             position: relative;
             overflow: hidden;
@@ -208,28 +209,29 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
+            width: 5px;
             height: 100%;
             background: var(--accent-color);
+            border-radius: 0 4px 4px 0;
         }
 
         .stat-card:hover {
-            box-shadow: 0 10px 30px rgba(180,100,130,0.12);
-            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(180,100,130,0.10);
+            transform: translateY(-3px);
         }
 
         [data-theme="dark"] .stat-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
         .stat-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             margin-bottom: 1rem;
         }
 
@@ -247,13 +249,14 @@
         }
 
         .badge-modern {
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            letter-spacing: 0.3px;
         }
 
         .preview-title {
@@ -266,27 +269,30 @@
         }
 
         .btn-modern {
-            padding: 0.625rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s;
+            padding: 0.6rem 1.4rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
         }
 
         .btn-primary-modern {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
         }
 
         .btn-primary-modern:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 96, 138, 0.35);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(212, 96, 138, 0.3);
         }
 
         .alert-modern {
-            border-radius: 12px;
+            border-radius: 10px;
             border: none;
+            border-left: 4px solid currentColor;
             padding: 1rem 1.25rem;
             display: flex;
             align-items: start;
@@ -327,41 +333,42 @@
 
         .table-modern {
             border-collapse: separate;
-            border-spacing: 0 0.5rem;
+            border-spacing: 0 0.35rem;
         }
 
         .table-modern thead th {
             border: none;
             background: transparent;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             padding: 0.75rem 1rem;
         }
 
         .table-modern tbody tr {
             background: var(--bg-secondary);
-            box-shadow: var(--card-shadow);
-            border-radius: 8px;
+            border-radius: 10px;
+            transition: background 0.15s ease;
         }
 
         .table-modern tbody td {
-            padding: 1rem;
+            padding: 0.9rem 1rem;
             border: none;
+            border-bottom: 1px solid var(--border-light);
             vertical-align: middle;
             color: var(--text-primary);
         }
 
         .table-modern tbody tr td:first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
         }
 
         .table-modern tbody tr td:last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
 
         /* Bootstrap Table Dark Mode Override */
@@ -440,12 +447,13 @@
 
         .modal-content-custom {
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 2rem;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
         }
 
         .modal-header-custom {
@@ -485,8 +493,10 @@
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .form-control:focus {
@@ -529,10 +539,16 @@
         .action-btn {
             background: transparent;
             border: none;
-            padding: 0.5rem;
-            border-radius: 6px;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
         }
 
         .action-btn:hover {
