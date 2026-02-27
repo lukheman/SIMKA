@@ -17,8 +17,8 @@ class PengajuanPinjamanFactory extends Factory
     public function definition(): array
     {
         return [
-            'anggota_id' => \App\Models\Anggota::factory(),
-            'jenis_pinjaman_id' => \App\Models\JenisPinjaman::factory(),
+            'anggota_id' => \App\Models\Anggota::inRandomOrder()->first()?->id ?? \App\Models\Anggota::factory(),
+            'jenis_pinjaman_id' => \App\Models\JenisPinjaman::inRandomOrder()->first()?->id ?? \App\Models\JenisPinjaman::factory(),
             'jumlah_pengajuan' => $this->faker->randomFloat(2, 1000000, 50000000),
             'jumlah_disetujui' => $this->faker->randomFloat(2, 1000000, 50000000),
             'tenor_bulan' => $this->faker->numberBetween(6, 60),

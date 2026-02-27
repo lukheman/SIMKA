@@ -17,7 +17,7 @@ class AngsuranFactory extends Factory
     public function definition(): array
     {
         return [
-            'pengajuan_pinjaman_id' => \App\Models\PengajuanPinjaman::factory(),
+            'pengajuan_pinjaman_id' => \App\Models\PengajuanPinjaman::inRandomOrder()->first()?->id ?? \App\Models\PengajuanPinjaman::factory(),
             'angsuran_ke' => $this->faker->numberBetween(1, 60),
             'tgl_jatuh_tempo' => $this->faker->date(),
             'tgl_bayar' => $this->faker->optional()->date(),

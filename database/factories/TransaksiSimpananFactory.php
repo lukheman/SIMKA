@@ -17,14 +17,14 @@ class TransaksiSimpananFactory extends Factory
     public function definition(): array
     {
         return [
-            'anggota_id' => \App\Models\Anggota::factory(),
-            'jenis_simpanan_id' => \App\Models\JenisSimpanan::factory(),
+            'anggota_id' => \App\Models\Anggota::inRandomOrder()->first()?->id ?? \App\Models\Anggota::factory(),
+            'jenis_simpanan_id' => \App\Models\JenisSimpanan::inRandomOrder()->first()?->id ?? \App\Models\JenisSimpanan::factory(),
             'kode_transaksi' => $this->faker->unique()->numerify('TRX-S-######'),
             'tipe_transaksi' => $this->faker->randomElement(\App\Enum\TipeTransaksi::values()),
             'jumlah' => $this->faker->randomFloat(2, 50000, 5000000),
             'tgl_transaksi' => $this->faker->date(),
             'keterangan' => $this->faker->sentence(),
-            'petugas_id' => \App\Models\User::factory(),
+            'petugas_id' => \App\Models\User::inRandomOrder()->first()?->id ?? \App\Models\User::factory(),
         ];
     }
 }
