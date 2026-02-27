@@ -12,13 +12,16 @@ class JenisSimpananSeeder extends Seeder
      */
     public function run(): void
     {
-        $jenis = ['Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Hari Raya', 'Simpanan Sukarela'];
+        $data = [
+            ['nama_simpanan' => 'Simpanan Pokok', 'minimal_setor' => 100000],
+            ['nama_simpanan' => 'Simpanan Wajib', 'minimal_setor' => 50000],
+            ['nama_simpanan' => 'Simpanan Sukarela', 'minimal_setor' => 10000],
+            ['nama_simpanan' => 'Simpanan Berjangka', 'minimal_setor' => 500000],
+            ['nama_simpanan' => 'Simpanan Hari Raya', 'minimal_setor' => 25000],
+        ];
 
-        foreach ($jenis as $nama) {
-            \App\Models\JenisSimpanan::factory()->create([
-                'nama_simpanan' => $nama,
-                'minimal_setor' => rand(100, 1000) * 100,
-            ]);
+        foreach ($data as $item) {
+            \App\Models\JenisSimpanan::create($item);
         }
     }
 }
