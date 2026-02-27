@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\UserManagement;
+use App\Livewire\Admin\AnggotaManagement;
+use App\Livewire\Admin\JenisSimpananManagement;
+use App\Livewire\Admin\JenisPinjamanManagement;
 use App\Livewire\Admin\Profile;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -19,6 +22,9 @@ Route::get('/register', Register::class)->name('register');
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/users', UserManagement::class)->name('admin.users');
+    Route::get('/anggota', AnggotaManagement::class)->name('admin.anggota');
+    Route::get('/jenis-simpanan', JenisSimpananManagement::class)->name('admin.jenis-simpanan');
+    Route::get('/jenis-pinjaman', JenisPinjamanManagement::class)->name('admin.jenis-pinjaman');
     Route::get('/profile', Profile::class)->name('admin.profile');
     Route::post('/logout', [LogoutController::class, '__invoke'])->name('logout');
 });

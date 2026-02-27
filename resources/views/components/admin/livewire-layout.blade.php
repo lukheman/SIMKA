@@ -603,6 +603,12 @@
         <x-admin.sidebar-section title="Main">
             <x-admin.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-admin.sidebar-link>
             <x-admin.sidebar-link href="{{ route('admin.users') }}" icon="fas fa-users" :active="request()->routeIs('admin.users')">Users</x-admin.sidebar-link>
+            <x-admin.sidebar-link href="{{ route('admin.anggota') }}" icon="fas fa-id-card" :active="request()->routeIs('admin.anggota')">Anggota</x-admin.sidebar-link>
+        </x-admin.sidebar-section>
+
+        <x-admin.sidebar-section title="Master Data">
+            <x-admin.sidebar-link href="{{ route('admin.jenis-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.jenis-simpanan')">Jenis Simpanan</x-admin.sidebar-link>
+            <x-admin.sidebar-link href="{{ route('admin.jenis-pinjaman') }}" icon="fas fa-hand-holding-usd" :active="request()->routeIs('admin.jenis-pinjaman')">Jenis Pinjaman</x-admin.sidebar-link>
         </x-admin.sidebar-section>
 
         <x-admin.sidebar-section title="Account">
