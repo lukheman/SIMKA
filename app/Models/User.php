@@ -83,11 +83,4 @@ class User extends Authenticatable
         return !empty($this->avatar);
     }
 
-    /**
-     * Get the anggota associated with the user.
-     */
-    public function anggota()
-    {
-        return $this->hasOne(Anggota::class);
-    }
 }

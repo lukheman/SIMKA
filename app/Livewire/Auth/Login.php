@@ -25,7 +25,14 @@ class Login extends Component
     {
         $credentials = $this->validate();
 
-        if (Auth::attempt($credentials, $this->remember)) {
+        // Try admin/user login first
+        if (Auth::guard('web')->attempt($credentials, $this->remember)) {
+            session()->regenerate();
+            return redirect()->to(route('dashboard'));
+        }
+
+        // Try anggota login
+        if (Auth::guard('anggota')->attempt($credentials, $this->remember)) {
             session()->regenerate();
             return redirect()->to(route('dashboard'));
         }

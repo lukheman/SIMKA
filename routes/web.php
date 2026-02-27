@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\UserManagement;
 use App\Livewire\Admin\AnggotaManagement;
+use App\Livewire\Admin\AnggotaForm;
 use App\Livewire\Admin\JenisSimpananManagement;
 use App\Livewire\Admin\JenisPinjamanManagement;
 use App\Livewire\Admin\Profile;
@@ -23,6 +24,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/users', UserManagement::class)->name('admin.users');
     Route::get('/anggota', AnggotaManagement::class)->name('admin.anggota');
+    Route::get('/anggota/create', AnggotaForm::class)->name('admin.anggota.create');
+    Route::get('/anggota/{id}/edit', AnggotaForm::class)->name('admin.anggota.edit');
     Route::get('/jenis-simpanan', JenisSimpananManagement::class)->name('admin.jenis-simpanan');
     Route::get('/jenis-pinjaman', JenisPinjamanManagement::class)->name('admin.jenis-pinjaman');
     Route::get('/profile', Profile::class)->name('admin.profile');

@@ -17,8 +17,9 @@ class AnggotaFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Models\User::factory(),
             'no_anggota' => $this->faker->unique()->numerify('AGT-#####'),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => 'password',
             'nik' => $this->faker->unique()->numerify('1671##############'),
             'nama_lengkap' => $this->faker->name(),
             'alamat' => $this->faker->address(),
