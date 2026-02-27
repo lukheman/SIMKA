@@ -12,14 +12,16 @@ class JenisPinjamanSeeder extends Seeder
      */
     public function run(): void
     {
-        $jenis = ['Pinjaman Modal Usaha', 'Pinjaman Konsumtif', 'KPR', 'Kredit Kendaraan'];
+        $data = [
+            ['nama_pinjaman' => 'Pinjaman Modal Usaha', 'bunga_persen' => 1.5, 'maks_tenor_bulan' => 36],
+            ['nama_pinjaman' => 'Pinjaman Konsumtif', 'bunga_persen' => 2.0, 'maks_tenor_bulan' => 24],
+            ['nama_pinjaman' => 'Pinjaman Pendidikan', 'bunga_persen' => 1.0, 'maks_tenor_bulan' => 48],
+            ['nama_pinjaman' => 'Pinjaman Darurat', 'bunga_persen' => 2.5, 'maks_tenor_bulan' => 12],
+            ['nama_pinjaman' => 'Pinjaman Perumahan', 'bunga_persen' => 1.2, 'maks_tenor_bulan' => 60],
+        ];
 
-        foreach ($jenis as $nama) {
-            \App\Models\JenisPinjaman::factory()->create([
-                'nama_pinjaman' => $nama,
-                'bunga_persen' => rand(1, 10) + (rand(0, 9) / 10),
-                'maks_tenor_bulan' => rand(6, 60),
-            ]);
+        foreach ($data as $item) {
+            \App\Models\JenisPinjaman::create($item);
         }
     }
 }
