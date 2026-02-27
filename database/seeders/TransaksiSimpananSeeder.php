@@ -12,6 +12,6 @@ class TransaksiSimpananSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\TransaksiSimpanan::factory(50)->create();
+        \App\Models\TransaksiSimpanan::factory(10)->create();
     }
 }
