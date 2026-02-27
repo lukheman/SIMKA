@@ -12,6 +12,6 @@ class PengajuanPinjamanSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\PengajuanPinjaman::factory(20)->create();
+        \App\Models\PengajuanPinjaman::factory(10)->create();
     }
 }
