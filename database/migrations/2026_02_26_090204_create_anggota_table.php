@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('no_telp');
             $table->date('tgl_bergabung');
             $table->enum('status_aktif', \App\Enum\StatusAktif::values())->default(\App\Enum\StatusAktif::AKTIF->value);
+            $table->string('avatar')->nullable();
             $table->timestamps();
         });
     }

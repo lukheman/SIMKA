@@ -53,9 +53,6 @@
                             <td class="text-muted">{{ $jenisSimpanans->firstItem() + $index }}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="user-avatar" style="background: var(--success-color);">
-                                        <i class="fas fa-piggy-bank" style="font-size: 0.8rem;"></i>
-                                    </div>
                                     <div class="fw-semibold" style="color: var(--text-primary);">{{ $jenis->nama_simpanan }}
                                     </div>
                                 </div>

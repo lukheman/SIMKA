@@ -5,7 +5,6 @@ namespace App\Enum;
 enum UserRole: string
 {
     case ADMIN = 'admin';
-    case ANGGOTA = 'anggota';
     case PIMPINAN = 'pimpinan';
 
     public static function values(): array
@@ -17,7 +16,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'Admin',
-            self::ANGGOTA => 'Anggota',
             self::PIMPINAN => 'Pimpinan',
         };
     }
@@ -26,7 +24,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'primary',
-            self::ANGGOTA => 'info',
             self::PIMPINAN => 'warning',
         };
     }
@@ -35,7 +32,6 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'fas fa-shield-alt',
-            self::ANGGOTA => 'fas fa-user',
             self::PIMPINAN => 'fas fa-user-tie',
         };
     }

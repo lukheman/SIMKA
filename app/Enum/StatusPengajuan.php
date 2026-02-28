@@ -28,7 +28,7 @@ enum StatusPengajuan: string
     {
         return match ($this) {
             self::PENDING => 'warning',
-            self::DISETUJUI => 'info',
+            self::DISETUJUI => 'success',
             self::DITOLAK => 'danger',
             self::LUNAS => 'success',
         };

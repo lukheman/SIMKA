@@ -18,6 +18,7 @@ class TransaksiSimpanan extends Model
     {
         return [
             'tipe_transaksi' => \App\Enum\TipeTransaksi::class,
+            'status' => \App\Enum\StatusPengajuan::class,
         ];
     }
 
@@ -29,10 +30,5 @@ class TransaksiSimpanan extends Model
     public function jenisSimpanan()
     {
         return $this->belongsTo(JenisSimpanan::class);
-    }
-
-    public function petugas()
-    {
-        return $this->belongsTo(User::class, 'petugas_id');
     }
 }

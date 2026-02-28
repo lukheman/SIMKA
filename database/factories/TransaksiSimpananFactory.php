@@ -24,7 +24,7 @@ class TransaksiSimpananFactory extends Factory
             'jumlah' => $this->faker->randomFloat(2, 50000, 5000000),
             'tgl_transaksi' => $this->faker->date(),
             'keterangan' => $this->faker->sentence(),
-            'petugas_id' => \App\Models\User::inRandomOrder()->first()?->id ?? \App\Models\User::factory(),
+            'status' => \App\Enum\StatusPengajuan::DISETUJUI->value,
         ];
     }
 }

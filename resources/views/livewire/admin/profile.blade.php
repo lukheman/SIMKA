@@ -106,62 +106,54 @@
     </style>
 
     <div class="row g-4">
-        {{-- Left: Profile Sidebar Card --}}
+        {{-- Left: Profile Sidebar --}}
         <div class="col-lg-3">
-            <div class="profile-sidebar">
+            <div style="position: sticky; top: calc(var(--topbar-height) + 2rem);">
                 <div class="modern-card text-center" style="border-top: none;">
                     {{-- Avatar --}}
                     <div class="mb-3">
                         @if($currentAvatar)
                             <img src="{{ Storage::url($currentAvatar) }}" alt="Avatar" class="rounded-circle"
-                                style="width: 88px; height: 88px; object-fit: cover; border: 3px solid var(--primary-light);">
+                                style="width: 80px; height: 80px; object-fit: cover;">
                         @else
-                            <div class="user-avatar mx-auto" style="width: 88px; height: 88px; font-size: 2.2rem;">
+                            <div class="user-avatar mx-auto" style="width: 80px; height: 80px; font-size: 1.5rem;">
                                 {{ Auth::user()->initials() }}
                             </div>
                         @endif
                     </div>
 
-                    <h6 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.15rem;">
-                        {{ Auth::user()->name }}</h6>
-                    <p class="text-muted mb-2" style="font-size: 0.8rem;">{{ Auth::user()->email }}</p>
+                    <h6 class="fw-bold mb-0" style="color: var(--text-primary);">{{ $name }}</h6>
+                    <small class="text-muted">{{ $email }}</small>
 
-                    <div class="d-flex justify-content-center gap-1 mb-3">
-                        <x-admin.badge variant="primary" icon="fas fa-user-shield">Admin</x-admin.badge>
-                        <x-admin.badge variant="{{ Auth::user()->email_verified_at ? 'success' : 'warning' }}">
-                            {{ Auth::user()->email_verified_at ? 'Verified' : 'Unverified' }}
-                        </x-admin.badge>
-                    </div>
+                    <div style="height: 1px; background: var(--border-light); margin: 1.25rem 0;"></div>
 
-                    <div class="divider"></div>
-
-                    {{-- Stats --}}
-                    <div class="row g-2 mb-3">
-                        <div class="col-6">
-                            <div class="profile-stat-box">
-                                <div class="stat-value">{{ Auth::user()->created_at->format('d M Y') }}</div>
-                                <div class="stat-label">Bergabung</div>
-                            </div>
+                    {{-- Info --}}
+                    <div class="text-start" style="font-size: 0.85rem;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="fas fa-user-shield text-muted" style="width: 16px;"></i>
+                            <span style="color: var(--text-secondary);">Administrator</span>
                         </div>
-                        <div class="col-6">
-                            <div class="profile-stat-box">
-                                <div class="stat-value">{{ Auth::user()->updated_at->diffForHumans(null, true) }}</div>
-                                <div class="stat-label">Diperbarui</div>
-                            </div>
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="fas fa-calendar text-muted" style="width: 16px;"></i>
+                            <span style="color: var(--text-secondary);">{{ Auth::user()->created_at->format('d M Y') }}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-envelope text-muted" style="width: 16px;"></i>
+                            <span style="color: var(--text-secondary);">{{ Auth::user()->email_verified_at ? 'Verified' : 'Unverified' }}</span>
                         </div>
                     </div>
 
-                    <div class="divider"></div>
+                    <div style="height: 1px; background: var(--border-light); margin: 1.25rem 0;"></div>
 
                     {{-- Navigation --}}
                     <nav class="d-flex flex-column gap-1">
-                        <a href="#section-avatar" class="profile-nav-item active">
+                        <a href="#section-avatar" class="d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-decoration-none" style="color: var(--primary-color); background: rgba(74,127,181,0.08);">
                             <i class="fas fa-camera"></i> Foto Profil
                         </a>
-                        <a href="#section-info" class="profile-nav-item">
+                        <a href="#section-info" class="d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-decoration-none" style="color: var(--text-secondary);">
                             <i class="fas fa-user"></i> Informasi Akun
                         </a>
-                        <a href="#section-password" class="profile-nav-item">
+                        <a href="#section-password" class="d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-decoration-none" style="color: var(--text-secondary);">
                             <i class="fas fa-lock"></i> Keamanan
                         </a>
                     </nav>
@@ -174,25 +166,22 @@
 
             {{-- Section 1: Avatar Upload --}}
             <div class="modern-card mb-4" id="section-avatar">
-                <div class="d-flex align-items-start justify-content-between mb-1">
-                    <div>
-                        <div class="profile-section-title">Foto Profil</div>
-                        <div class="profile-section-desc">Unggah foto untuk mempersonalisasi akun Anda</div>
-                    </div>
+                <div class="mb-1">
+                    <div class="fw-bold" style="color: var(--text-primary); font-size: 1rem;">Foto Profil</div>
+                    <small class="text-muted">Unggah foto untuk mempersonalisasi akun Anda</small>
                 </div>
+
+                <div style="height: 1px; background: var(--border-light); margin: 1rem 0;"></div>
 
                 <div class="row align-items-center g-4">
                     {{-- Current Avatar Preview --}}
                     <div class="col-auto">
                         @if($avatar)
-                            <img src="{{ $avatar->temporaryUrl() }}" alt="Preview" class="rounded-circle"
-                                style="width: 96px; height: 96px; object-fit: cover; border: 3px solid var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <img src="{{ $avatar->temporaryUrl() }}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;" alt="Preview">
                         @elseif($currentAvatar)
-                            <img src="{{ Storage::url($currentAvatar) }}" alt="Avatar" class="rounded-circle"
-                                style="width: 96px; height: 96px; object-fit: cover; border: 3px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <img src="{{ Storage::url($currentAvatar) }}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;" alt="Avatar">
                         @else
-                            <div class="user-avatar"
-                                style="width: 96px; height: 96px; font-size: 2.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="user-avatar" style="width: 80px; height: 80px; font-size: 1.5rem;">
                                 {{ Auth::user()->initials() }}
                             </div>
                         @endif
@@ -203,45 +192,37 @@
                         <input type="file" wire:model="avatar" id="avatar-upload" class="d-none" accept="image/*">
 
                         <label for="avatar-upload" class="avatar-upload-zone d-block mb-2">
-                            <i class="fas fa-cloud-upload-alt d-block mb-1"
-                                style="font-size: 1.5rem; color: var(--text-muted);"></i>
-                            <span wire:loading.remove wire:target="avatar"
-                                style="font-size: 0.85rem; color: var(--text-secondary);">
-                                Klik untuk memilih foto atau <strong
-                                    style="color: var(--primary-color);">browse</strong>
+                            <span wire:loading.remove wire:target="avatar">
+                                <i class="fas fa-cloud-upload-alt me-2" style="color: var(--primary-color);"></i>
+                                <span style="color: var(--text-secondary); font-size: 0.85rem;">Klik untuk memilih foto</span>
                             </span>
-                            <span wire:loading wire:target="avatar"
-                                style="font-size: 0.85rem; color: var(--primary-color);">
-                                <i class="fas fa-spinner fa-spin me-1"></i> Mengupload...
+                            <span wire:loading wire:target="avatar">
+                                <i class="fas fa-spinner fa-spin me-2" style="color: var(--primary-color);"></i>
+                                <span style="color: var(--text-secondary); font-size: 0.85rem;">Mengunggah...</span>
                             </span>
                             <br>
                             <small class="text-muted" style="font-size: 0.7rem;">JPG, PNG, GIF — Maks 2MB</small>
                         </label>
 
+                        @error('avatar')
+                            <div class="text-danger" style="font-size: 0.85rem;">{{ $message }}</div>
+                        @enderror
+
                         <div class="d-flex gap-2 flex-wrap">
                             @if($avatar)
-                                <button type="button" wire:click="uploadAvatar" class="btn btn-modern"
-                                    style="background: var(--success-color); color: white; font-size: 0.8rem; padding: 0.4rem 1rem;">
-                                    <i class="fas fa-check me-1"></i>Simpan Foto
+                                <button wire:click="uploadAvatar" class="btn btn-sm btn-modern btn-primary-modern">
+                                    <i class="fas fa-save me-1"></i> Simpan
                                 </button>
-                                <button type="button" wire:click="$set('avatar', null)" class="btn btn-modern"
-                                    style="background: var(--bg-tertiary); color: var(--text-primary); font-size: 0.8rem; padding: 0.4rem 1rem;">
-                                    <i class="fas fa-times me-1"></i>Batal
+                                <button wire:click="$set('avatar', null)" class="btn btn-sm btn-modern" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);">
+                                    Batal
                                 </button>
                             @endif
-
                             @if($currentAvatar && !$avatar)
-                                <button type="button" wire:click="removeAvatar" class="btn btn-modern"
-                                    style="background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); font-size: 0.8rem; padding: 0.4rem 1rem;"
-                                    onclick="return confirm('Hapus foto profil?')">
-                                    <i class="fas fa-trash me-1"></i>Hapus Foto
+                                <button wire:click="removeAvatar" wire:confirm="Yakin ingin menghapus foto profil?" class="btn btn-sm btn-modern" style="color: var(--danger-color); background: rgba(212,93,93,0.08); border: 1px solid rgba(212,93,93,0.2);">
+                                    <i class="fas fa-trash me-1"></i> Hapus Foto
                                 </button>
                             @endif
                         </div>
-
-                        @error('avatar')
-                            <div class="text-danger mt-2" style="font-size: 0.8rem;">{{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
             </div>

@@ -53,7 +53,8 @@
                     @forelse ($anggotas as $anggota)
                         <tr wire:key="anggota-{{ $anggota->id }}">
                             <td>
-                                <span class="fw-semibold" style="color: var(--primary-color);">{{ $anggota->no_anggota }}</span>
+                                <code style="color: var(--primary-color);">{{ $anggota->no_anggota }}</code>
+
                             </td>
                             <td>
                                 <div class="d-flex align-items-center gap-3">

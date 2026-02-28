@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enum\StatusAktif;
+use App\Models\Anggota;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +22,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => 'password123',
             'role' => 'admin',
+        ]);
+
+        Anggota::factory()->create([
+            'email' => 'anggota1@gmail.com',
+            'password' => 'password123',
+            'status_aktif' => StatusAktif::AKTIF
         ]);
 
         $this->call([

@@ -10,7 +10,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 #[Layout('components.auth.layout')]
-#[Title('Login - AdminPro')]
+#[Title('Login - SIMKA')]
 class Login extends Component
 {
     #[Rule(['required', 'email'])]
@@ -34,7 +34,7 @@ class Login extends Component
         // Try anggota login
         if (Auth::guard('anggota')->attempt($credentials, $this->remember)) {
             session()->regenerate();
-            return redirect()->to(route('dashboard'));
+            return redirect()->to(route('anggota.dashboard'));
         }
 
         $this->addError('email', __('auth.failed'));

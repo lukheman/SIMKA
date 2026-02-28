@@ -43,7 +43,6 @@
                         <th>User</th>
                         <th>Email</th>
                         <th>Created</th>
-                        <th>Status</th>
                         <th style="width: 120px;">Actions</th>
                     </tr>
                 </thead>
@@ -61,13 +60,6 @@
                             </td>
                             <td style="color: var(--text-secondary);">{{ $user->email }}</td>
                             <td class="text-muted">{{ $user->created_at->format('M d, Y') }}</td>
-                            <td>
-                                @if($user->email_verified_at)
-                                    <x-admin.badge variant="success" icon="fas fa-check-circle">Verified</x-admin.badge>
-                                @else
-                                    <x-admin.badge variant="warning" icon="fas fa-clock">Pending</x-admin.badge>
-                                @endif
-                            </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <x-admin.action-btn-edit wire:click="openEditModal({{ $user->id }})" />

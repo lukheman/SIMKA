@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->decimal('jumlah', 15, 2);
             $table->date('tgl_transaksi');
             $table->text('keterangan')->nullable();
-            $table->foreignId('petugas_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('status', \App\Enum\StatusPengajuan::values())->default(\App\Enum\StatusPengajuan::PENDING->value);
+            $table->text('alasan_tolak')->nullable();
             $table->timestamps();
         });
     }
