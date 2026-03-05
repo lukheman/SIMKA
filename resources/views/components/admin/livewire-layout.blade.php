@@ -601,26 +601,51 @@
     <!-- Sidebar -->
     <x-admin.sidebar :brand-name="$brandName" :brand-icon="$brandIcon">
         @if(Auth::guard('web')->check())
-            {{-- Admin Sidebar --}}
-            <x-admin.sidebar-section title="MENU">
-                <x-admin.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-admin.sidebar-link>
-                <x-admin.sidebar-link href="{{ route('admin.users') }}" icon="fas fa-users" :active="request()->routeIs('admin.users')">Users</x-admin.sidebar-link>
-                <x-admin.sidebar-link href="{{ route('admin.anggota') }}" icon="fas fa-id-card" :active="request()->routeIs('admin.anggota*')">Anggota</x-admin.sidebar-link>
-            </x-admin.sidebar-section>
+            @if(Auth::user()->role === \App\Enum\UserRole::ADMIN)
+                {{-- Admin Sidebar --}}
+                <x-admin.sidebar-section title="MENU">
+                    <x-admin.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.users') }}" icon="fas fa-users" :active="request()->routeIs('admin.users')">Users</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.anggota') }}" icon="fas fa-id-card" :active="request()->routeIs('admin.anggota*')">Anggota</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
 
-            <x-admin.sidebar-section title="Master Data">
-                <x-admin.sidebar-link href="{{ route('admin.jenis-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.jenis-simpanan')">Jenis Simpanan</x-admin.sidebar-link>
-                <x-admin.sidebar-link href="{{ route('admin.jenis-pinjaman') }}" icon="fas fa-hand-holding-usd" :active="request()->routeIs('admin.jenis-pinjaman')">Jenis Pinjaman</x-admin.sidebar-link>
-            </x-admin.sidebar-section>
+                <x-admin.sidebar-section title="Master Data">
+                    <x-admin.sidebar-link href="{{ route('admin.jenis-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.jenis-simpanan')">Jenis Simpanan</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.jenis-pinjaman') }}" icon="fas fa-hand-holding-usd" :active="request()->routeIs('admin.jenis-pinjaman')">Jenis Pinjaman</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
 
-            <x-admin.sidebar-section title="Transaksi">
-                <x-admin.sidebar-link href="{{ route('admin.transaksi-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.transaksi-simpanan')">Transaksi Simpanan</x-admin.sidebar-link>
-                <x-admin.sidebar-link href="{{ route('admin.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('admin.pengajuan-pinjaman')">Pengajuan Pinjaman</x-admin.sidebar-link>
-            </x-admin.sidebar-section>
+                <x-admin.sidebar-section title="Transaksi">
+                    <x-admin.sidebar-link href="{{ route('admin.transaksi-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.transaksi-simpanan')">Transaksi Simpanan</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('admin.pengajuan-pinjaman')">Pengajuan Pinjaman</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.angsuran') }}" icon="fas fa-money-bill-wave" :active="request()->routeIs('admin.angsuran')">Angsuran</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
 
-            <x-admin.sidebar-section title="AKUN">
-                <x-admin.sidebar-link href="{{ route('admin.profile') }}" icon="fas fa-user-circle" :active="request()->routeIs('admin.profile')">Profile</x-admin.sidebar-link>
-            </x-admin.sidebar-section>
+                <x-admin.sidebar-section title="Laporan">
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.anggota') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.anggota')">Laporan Anggota</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.simpanan') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.simpanan')">Laporan Simpanan</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.pinjaman') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.pinjaman')">Laporan Pinjaman</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
+
+                <x-admin.sidebar-section title="AKUN">
+                    <x-admin.sidebar-link href="{{ route('admin.profile') }}" icon="fas fa-user-circle" :active="request()->routeIs('admin.profile')">Profile</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
+
+            @elseif(Auth::user()->role === \App\Enum\UserRole::PIMPINAN)
+                {{-- Pimpinan Sidebar --}}
+                <x-admin.sidebar-section title="MENU">
+                    <x-admin.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
+
+                <x-admin.sidebar-section title="Laporan">
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.anggota') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.anggota')">Laporan Anggota</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.simpanan') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.simpanan')">Laporan Simpanan</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.laporan.pinjaman') }}" icon="fas fa-file-alt" :active="request()->routeIs('admin.laporan.pinjaman')">Laporan Pinjaman</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
+
+                <x-admin.sidebar-section title="AKUN">
+                    <x-admin.sidebar-link href="{{ route('admin.profile') }}" icon="fas fa-user-circle" :active="request()->routeIs('admin.profile')">Profile</x-admin.sidebar-link>
+                </x-admin.sidebar-section>
+            @endif
 
         @elseif(Auth::guard('anggota')->check())
             {{-- Anggota Sidebar --}}
@@ -631,6 +656,17 @@
             <x-admin.sidebar-section title="Transaksi">
                 <x-admin.sidebar-link href="{{ route('anggota.simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('anggota.simpanan')">Simpanan</x-admin.sidebar-link>
                 <x-admin.sidebar-link href="{{ route('anggota.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('anggota.pengajuan-pinjaman*')">Pengajuan Pinjaman</x-admin.sidebar-link>
+                <x-admin.sidebar-link href="{{ route('anggota.angsuran') }}" icon="fas fa-money-bill-wave" :active="request()->routeIs('anggota.angsuran')">Angsuran</x-admin.sidebar-link>
+            </x-admin.sidebar-section>
+
+            <x-admin.sidebar-section title="Notifikasi">
+                @php $unreadCount = \App\Models\Notifikasi::where('anggota_id', Auth::guard('anggota')->id())->where('dibaca', false)->count(); @endphp
+                <x-admin.sidebar-link href="{{ route('anggota.notifikasi') }}" icon="fas fa-bell" :active="request()->routeIs('anggota.notifikasi')">
+                    Notifikasi
+                    @if($unreadCount > 0)
+                        <span style="background: var(--danger-color); color: white; font-size: 0.7rem; padding: 2px 7px; border-radius: 50px; margin-left: auto; font-weight: 700;">{{ $unreadCount }}</span>
+                    @endif
+                </x-admin.sidebar-link>
             </x-admin.sidebar-section>
 
             <x-admin.sidebar-section title="Akun">

@@ -5,6 +5,7 @@ namespace App\Enum;
 enum StatusBayar: string
 {
     case BELUM = 'belum';
+    case MENUNGGU = 'menunggu';
     case LUNAS = 'lunas';
 
     public static function values(): array
@@ -16,6 +17,7 @@ enum StatusBayar: string
     {
         return match ($this) {
             self::BELUM => 'Belum Lunas',
+            self::MENUNGGU => 'Menunggu Verifikasi',
             self::LUNAS => 'Lunas',
         };
     }
@@ -24,6 +26,7 @@ enum StatusBayar: string
     {
         return match ($this) {
             self::BELUM => 'warning',
+            self::MENUNGGU => 'primary',
             self::LUNAS => 'success',
         };
     }
@@ -32,6 +35,7 @@ enum StatusBayar: string
     {
         return match ($this) {
             self::BELUM => 'fas fa-hourglass-half',
+            self::MENUNGGU => 'fas fa-clock',
             self::LUNAS => 'fas fa-check-circle',
         };
     }

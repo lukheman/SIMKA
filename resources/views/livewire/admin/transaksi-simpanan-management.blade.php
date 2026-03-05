@@ -19,10 +19,7 @@
             <div class="d-flex align-items-center gap-2">
                 <h5 class="mb-0" style="color: var(--text-primary); font-weight: 600;">Daftar Transaksi</h5>
                 @if ($pendingCount > 0)
-                    <span class="badge-modern"
-                        style="background: rgba(255,193,7,0.15); color: var(--warning-color); font-size: 0.8rem;">
-                        <i class="fas fa-clock me-1"></i>{{ $pendingCount }} menunggu
-                    </span>
+                    <x-admin.badge variant="warning" icon="fas fa-clock">{{ $pendingCount }} menunggu</x-admin.badge>
                 @endif
             </div>
             <div class="d-flex gap-2">
@@ -90,10 +87,8 @@
                             <td class="fw-semibold">{{ $t->jenisSimpanan->nama_simpanan }}</td>
                             <td>
                                 @php $tipe = $t->tipe_transaksi instanceof \App\Enum\TipeTransaksi ? $t->tipe_transaksi : \App\Enum\TipeTransaksi::from($t->tipe_transaksi); @endphp
-                                <span class="badge-modern"
-                                    style="color: var(--{{ $tipe->color() }}-color); background: rgba(var(--badge-rgb), 0.12);">
-                                    <i class="{{ $tipe->icon() }}"></i> {{ $tipe->label() }}
-                                </span>
+                                <x-admin.badge :variant="$tipe->color()"
+                                    :icon="$tipe->icon()">{{ $tipe->label() }}</x-admin.badge>
                             </td>
                             <td class="fw-semibold"
                                 style="color: {{ $tipe === \App\Enum\TipeTransaksi::SETOR ? 'var(--success-color)' : 'var(--danger-color)' }};">

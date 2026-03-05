@@ -9,7 +9,7 @@ use Livewire\Attributes\Rule;
 
 use Livewire\Component;
 
-#[Layout('components.auth.layout')]
+#[Layout('components.guest.layout')]
 #[Title('Login - SIMKA')]
 class Login extends Component
 {

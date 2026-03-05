@@ -3,6 +3,9 @@
 namespace App\Livewire\Admin;
 
 use App\Enum\StatusPengajuan;
+use App\Enum\TipeNotifikasi;
+use App\Models\Angsuran;
+use App\Models\Notifikasi;
 use App\Models\PengajuanPinjaman;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -63,6 +66,32 @@ class PengajuanPinjamanManagement extends Component
             'tgl_cair' => now()->toDateString(),
         ]);
 
+        // Auto-generate angsuran records
+        $jumlahDisetujui = (float) $this->jumlah_disetujui;
+        $tenor = $pengajuan->tenor_bulan;
+        $bungaTotal = (float) $pengajuan->bunga_total;
+        $pokokPerBulan = round($jumlahDisetujui / $tenor, 2);
+        $bungaPerBulan = round($bungaTotal / $tenor, 2);
+        $tglCair = now();
+
+        for ($i = 1; $i <= $tenor; $i++) {
+            Angsuran::create([
+                'pengajuan_pinjaman_id' => $pengajuan->id,
+                'angsuran_ke' => $i,
+                'tgl_jatuh_tempo' => $tglCair->copy()->addMonths($i)->toDateString(),
+                'jumlah_pokok' => $pokokPerBulan,
+                'jumlah_bunga' => $bungaPerBulan,
+            ]);
+        }
+
+        Notifikasi::create([
+            'anggota_id' => $pengajuan->anggota_id,
+            'judul' => 'Pinjaman Disetujui',
+            'pesan' => 'Pengajuan pinjaman Anda sebesar Rp ' . number_format($jumlahDisetujui, 0, ',', '.') . ' telah disetujui. Jadwal angsuran telah dibuat.',
+            'tipe' => TipeNotifikasi::SUKSES,
+            'link' => route('anggota.pengajuan-pinjaman'),
+        ]);
+
         $this->showApproveModal = false;
         $this->approvingId = null;
         $this->jumlah_disetujui = '';
@@ -86,6 +115,14 @@ class PengajuanPinjamanManagement extends Component
         $pengajuan->update([
             'status' => StatusPengajuan::DITOLAK->value,
             'alasan_tolak' => $this->alasan_tolak,
+        ]);
+
+        Notifikasi::create([
+            'anggota_id' => $pengajuan->anggota_id,
+            'judul' => 'Pinjaman Ditolak',
+            'pesan' => 'Pengajuan pinjaman Anda telah ditolak. Alasan: ' . $this->alasan_tolak,
+            'tipe' => TipeNotifikasi::BAHAYA,
+            'link' => route('anggota.pengajuan-pinjaman'),
         ]);
 
         $this->showRejectModal = false;

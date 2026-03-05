@@ -99,10 +99,8 @@
                                 {{ $t->jenisSimpanan->nama_simpanan }}</td>
                             <td>
                                 @php $tipe = $t->tipe_transaksi instanceof \App\Enum\TipeTransaksi ? $t->tipe_transaksi : \App\Enum\TipeTransaksi::from($t->tipe_transaksi); @endphp
-                                <span class="badge-modern"
-                                    style="color: var(--{{ $tipe->color() }}-color); background: rgba(var(--badge-rgb), 0.12);">
-                                    <i class="{{ $tipe->icon() }}"></i> {{ $tipe->label() }}
-                                </span>
+                                <x-admin.badge :variant="$tipe->color()"
+                                    :icon="$tipe->icon()">{{ $tipe->label() }}</x-admin.badge>
                             </td>
                             <td class="fw-semibold"
                                 style="color: {{ $tipe === \App\Enum\TipeTransaksi::SETOR ? 'var(--success-color)' : 'var(--danger-color)' }};">

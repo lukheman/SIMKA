@@ -2,59 +2,74 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\User;
+use App\Models\Anggota;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Rule;
 use Livewire\Component;
 
-#[Layout('components.auth.layout')]
-#[Title('Register - AdminPro')]
+#[Layout('components.guest.layout')]
+#[Title('Daftar Anggota - SIMKA')]
 class Register extends Component
 {
-    #[Rule(['required', 'string', 'max:255'])]
-    public string $name = '';
-
-    #[Rule(['required', 'email', 'max:255', 'unique:users,email'])]
+    public string $nama_lengkap = '';
+    public string $nik = '';
     public string $email = '';
-
+    public string $no_telp = '';
+    public string $alamat = '';
+    public string $pekerjaan = '';
     public string $password = '';
     public string $password_confirmation = '';
-
-    public bool $agree_terms = false;
 
     protected function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'agree_terms' => ['accepted'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'nik' => ['required', 'string', 'size:16'],
+            'email' => ['required', 'email', 'max:255', 'unique:anggota,email'],
+            'no_telp' => ['required', 'string', 'max:15'],
+            'alamat' => ['required', 'string'],
+            'pekerjaan' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'confirmed', Password::min(8)],
         ];
     }
 
     protected $messages = [
-        'agree_terms.accepted' => 'Anda harus menyetujui syarat dan ketentuan.',
+        'nik.size' => 'NIK harus terdiri dari 16 digit.',
+        'email.unique' => 'Email sudah terdaftar.',
+        'password.confirmed' => 'Konfirmasi password tidak cocok.',
     ];
+
+    private function generateNoAnggota(): string
+    {
+        $lastAnggota = Anggota::orderBy('id', 'desc')->first();
+        $lastNumber = $lastAnggota ? (int) substr($lastAnggota->no_anggota, 4) : 0;
+        return 'AGT-' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+    }
 
     public function submit()
     {
         $validated = $this->validate();
 
-        $user = User::create([
-            'name' => $validated['name'],
+        $anggota = Anggota::create([
+            'no_anggota' => $this->generateNoAnggota(),
+            'nama_lengkap' => $validated['nama_lengkap'],
+            'nik' => $validated['nik'],
             'email' => $validated['email'],
+            'no_telp' => $validated['no_telp'],
+            'alamat' => $validated['alamat'],
+            'pekerjaan' => $validated['pekerjaan'],
             'password' => Hash::make($validated['password']),
+            'tgl_bergabung' => now()->toDateString(),
         ]);
 
-        Auth::login($user);
+        Auth::guard('anggota')->login($anggota);
 
         session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('anggota.dashboard');
     }
 
     public function render()

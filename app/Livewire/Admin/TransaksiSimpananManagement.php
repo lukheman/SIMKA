@@ -3,9 +3,11 @@
 namespace App\Livewire\Admin;
 
 use App\Enum\StatusPengajuan;
+use App\Enum\TipeNotifikasi;
 use App\Enum\TipeTransaksi;
 use App\Models\Anggota;
 use App\Models\JenisSimpanan;
+use App\Models\Notifikasi;
 use App\Models\TransaksiSimpanan;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
@@ -175,6 +177,15 @@ class TransaksiSimpananManagement extends Component
             'status' => StatusPengajuan::DISETUJUI->value,
         ]);
 
+        $tipeLabel = $trx->tipe_transaksi === TipeTransaksi::SETOR ? 'setoran' : 'penarikan';
+        Notifikasi::create([
+            'anggota_id' => $trx->anggota_id,
+            'judul' => 'Transaksi Simpanan Disetujui',
+            'pesan' => 'Transaksi ' . $tipeLabel . ' sebesar Rp ' . number_format($trx->jumlah, 0, ',', '.') . ' telah disetujui.',
+            'tipe' => TipeNotifikasi::SUKSES,
+            'link' => route('anggota.simpanan'),
+        ]);
+
         session()->flash('success', 'Pengajuan simpanan berhasil disetujui.');
     }
 
@@ -204,6 +215,15 @@ class TransaksiSimpananManagement extends Component
         $trx->update([
             'status' => StatusPengajuan::DITOLAK->value,
             'alasan_tolak' => $this->alasan_tolak,
+        ]);
+
+        $tipeLabel = $trx->tipe_transaksi === TipeTransaksi::SETOR ? 'setoran' : 'penarikan';
+        Notifikasi::create([
+            'anggota_id' => $trx->anggota_id,
+            'judul' => 'Transaksi Simpanan Ditolak',
+            'pesan' => 'Transaksi ' . $tipeLabel . ' Anda ditolak. Alasan: ' . $this->alasan_tolak,
+            'tipe' => TipeNotifikasi::BAHAYA,
+            'link' => route('anggota.simpanan'),
         ]);
 
         $this->closeRejectModal();

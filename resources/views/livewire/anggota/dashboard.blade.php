@@ -82,10 +82,7 @@
                                 <td class="text-muted">{{ \Carbon\Carbon::parse($p->tgl_pengajuan)->format('d M Y') }}</td>
                                 <td>
                                     @php $status = $p->status instanceof \App\Enum\StatusPengajuan ? $p->status : \App\Enum\StatusPengajuan::from($p->status); @endphp
-                                    <span class="badge-modern"
-                                        style="background: rgba(var(--badge-rgb), 0.12); color: var(--{{ $status->color() }}-color);">
-                                        <i class="{{ $status->icon() }}"></i> {{ $status->label() }}
-                                    </span>
+                                    <x-admin.badge :variant="$status->color()" :icon="$status->icon()">{{ $status->label() }}</x-admin.badge>
                                 </td>
                             </tr>
                         @endforeach

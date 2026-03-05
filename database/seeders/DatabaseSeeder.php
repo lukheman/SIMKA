@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enum\StatusAktif;
+use App\Enum\UserRole;
 use App\Models\Anggota;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,13 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => 'password123',
-            'role' => 'admin',
+            'role' => UserRole::ADMIN,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'pimpinan@gmail.com',
+            'password' => 'password123',
+            'role' => UserRole::PIMPINAN,
         ]);
 
         Anggota::factory()->create([

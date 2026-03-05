@@ -58,4 +58,9 @@ class Anggota extends Authenticatable
     {
         return $this->hasMany(PengajuanPinjaman::class);
     }
+
+    public function notifikasi()
+    {
+        return $this->hasMany(Notifikasi::class);
+    }
 }
