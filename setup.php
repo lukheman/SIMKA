@@ -338,7 +338,7 @@ if (file_exists("{$pathProject}/vendor")) {
     cetakInfo("Menjalankan composer install untuk memastikan dependensi terbaru...");
 }
 
-if (!jalankanCommand("composer install --no-interaction")) {
+if (!jalankanCommand("composer install --no-interaction --ignore-platform-reqs")) {
     cetakError("Composer install gagal!");
     exit(1);
 }
