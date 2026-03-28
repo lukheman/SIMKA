@@ -1,4 +1,4 @@
-<div>
+u<div>
     <x-admin.page-header title="Dashboard" subtitle="Ringkasan data pinjaman Anda" />
 
     {{-- Flash Messages --}}
@@ -54,10 +54,6 @@
     <div class="modern-card">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0" style="color: var(--text-primary); font-weight: 600;">Pengajuan Terbaru</h5>
-            <a href="{{ route('anggota.pengajuan-pinjaman.create') }}" wire:navigate
-                class="btn btn-modern btn-primary-modern">
-                <i class="fas fa-plus me-2"></i>Ajukan Pinjaman
-            </a>
         </div>
 
         @if ($recentPengajuan->count() > 0)

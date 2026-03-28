@@ -1,11 +1,5 @@
 <div>
     <x-admin.page-header title="Pengajuan Pinjaman" subtitle="Daftar pengajuan pinjaman Anda">
-        <x-slot:actions>
-            <a href="{{ route('anggota.pengajuan-pinjaman.create') }}" wire:navigate
-                class="btn btn-modern btn-primary-modern">
-                <i class="fas fa-plus me-2"></i>Ajukan Pinjaman
-            </a>
-        </x-slot:actions>
     </x-admin.page-header>
 
     {{-- Flash Messages --}}

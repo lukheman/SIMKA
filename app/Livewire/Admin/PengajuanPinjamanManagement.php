@@ -4,7 +4,9 @@ namespace App\Livewire\Admin;
 
 use App\Enum\StatusPengajuan;
 use App\Enum\TipeNotifikasi;
+use App\Models\Anggota;
 use App\Models\Angsuran;
+use App\Models\JenisPinjaman;
 use App\Models\Notifikasi;
 use App\Models\PengajuanPinjaman;
 use Livewire\Attributes\Layout;
@@ -25,6 +27,16 @@ class PengajuanPinjamanManagement extends Component
     #[Url(as: 'q')]
     public string $search = '';
 
+    // Create modal
+    public bool $showCreateModal = false;
+    public string $create_anggota_id = '';
+    public string $create_jenis_pinjaman_id = '';
+    public string $create_jumlah_pengajuan = '';
+    public string $create_tenor_bulan = '';
+    public float $create_bunga_persen = 0;
+    public int $create_maks_tenor = 0;
+    public float $create_estimasi_bunga = 0;
+
     // Approval modal
     public bool $showApproveModal = false;
     public ?int $approvingId = null;
@@ -44,6 +56,108 @@ class PengajuanPinjamanManagement extends Component
     {
         $this->resetPage();
     }
+
+    // === Create loan methods ===
+
+    public function openCreateModal(): void
+    {
+        $this->reset([
+            'create_anggota_id',
+            'create_jenis_pinjaman_id',
+            'create_jumlah_pengajuan',
+            'create_tenor_bulan',
+            'create_bunga_persen',
+            'create_maks_tenor',
+            'create_estimasi_bunga',
+        ]);
+        $this->resetValidation();
+        $this->showCreateModal = true;
+    }
+
+    public function updatedCreateJenisPinjamanId($value): void
+    {
+        if ($value) {
+            $jenis = JenisPinjaman::find($value);
+            if ($jenis) {
+                $this->create_bunga_persen = (float) $jenis->bunga_persen;
+                $this->create_maks_tenor = (int) $jenis->maks_tenor_bulan;
+            }
+        } else {
+            $this->create_bunga_persen = 0;
+            $this->create_maks_tenor = 0;
+        }
+        $this->hitungEstimasi();
+    }
+
+    public function updatedCreateJumlahPengajuan(): void
+    {
+        $this->hitungEstimasi();
+    }
+
+    public function updatedCreateTenorBulan(): void
+    {
+        $this->hitungEstimasi();
+    }
+
+    protected function hitungEstimasi(): void
+    {
+        $jumlah = (float) $this->create_jumlah_pengajuan;
+        $tenor = (int) $this->create_tenor_bulan;
+
+        if ($jumlah > 0 && $tenor > 0 && $this->create_bunga_persen > 0) {
+            $this->create_estimasi_bunga = $jumlah * ($this->create_bunga_persen / 100) * $tenor;
+        } else {
+            $this->create_estimasi_bunga = 0;
+        }
+    }
+
+    public function createPinjaman(): void
+    {
+        $this->validate([
+            'create_anggota_id' => ['required', 'exists:anggota,id'],
+            'create_jenis_pinjaman_id' => ['required', 'exists:jenis_pinjaman,id'],
+            'create_jumlah_pengajuan' => ['required', 'numeric', 'min:100000'],
+            'create_tenor_bulan' => ['required', 'integer', 'min:1'],
+        ], [
+            'create_anggota_id.required' => 'Pilih anggota.',
+            'create_jenis_pinjaman_id.required' => 'Pilih jenis pinjaman.',
+            'create_jumlah_pengajuan.required' => 'Jumlah pinjaman wajib diisi.',
+            'create_jumlah_pengajuan.min' => 'Jumlah pinjaman minimal Rp 100.000.',
+            'create_tenor_bulan.required' => 'Tenor wajib diisi.',
+            'create_tenor_bulan.min' => 'Tenor minimal 1 bulan.',
+        ]);
+
+        if ($this->create_maks_tenor > 0 && (int) $this->create_tenor_bulan > $this->create_maks_tenor) {
+            $this->addError('create_tenor_bulan', "Tenor maksimal adalah {$this->create_maks_tenor} bulan.");
+            return;
+        }
+
+        $jumlah = (float) $this->create_jumlah_pengajuan;
+        $tenor = (int) $this->create_tenor_bulan;
+
+        PengajuanPinjaman::create([
+            'anggota_id' => $this->create_anggota_id,
+            'jenis_pinjaman_id' => $this->create_jenis_pinjaman_id,
+            'jumlah_pengajuan' => $jumlah,
+            'tenor_bulan' => $tenor,
+            'bunga_total' => $this->create_estimasi_bunga,
+            'status' => 'pending',
+            'tgl_pengajuan' => now()->toDateString(),
+        ]);
+
+        Notifikasi::create([
+            'anggota_id' => $this->create_anggota_id,
+            'judul' => 'Pengajuan Pinjaman Baru',
+            'pesan' => 'Admin telah membuat pengajuan pinjaman sebesar Rp ' . number_format($jumlah, 0, ',', '.') . ' atas nama Anda.',
+            'tipe' => TipeNotifikasi::INFO,
+            'link' => route('anggota.pengajuan-pinjaman'),
+        ]);
+
+        $this->showCreateModal = false;
+        session()->flash('success', 'Pengajuan pinjaman berhasil dibuat.');
+    }
+
+    // === Approve / Reject methods ===
 
     public function openApproveModal(int $id): void
     {
@@ -133,6 +247,7 @@ class PengajuanPinjamanManagement extends Component
 
     public function closeModal(): void
     {
+        $this->showCreateModal = false;
         $this->showApproveModal = false;
         $this->showRejectModal = false;
         $this->approvingId = null;
@@ -156,6 +271,8 @@ class PengajuanPinjamanManagement extends Component
         return view('livewire.admin.pengajuan-pinjaman-management', [
             'pengajuans' => $pengajuans,
             'statusOptions' => StatusPengajuan::cases(),
+            'anggotaList' => Anggota::orderBy('nama_lengkap')->get(),
+            'jenisPinjamanList' => JenisPinjaman::all(),
         ]);
     }
 }
