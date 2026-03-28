@@ -73,8 +73,16 @@
             transition: all 0.3s ease;
         }
 
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+        }
+
         [data-theme="dark"] .navbar {
             background: rgba(20, 19, 24, 0.9);
+        }
+
+        [data-theme="dark"] .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
 
         .navbar-container {
@@ -98,6 +106,63 @@
 
         .navbar-brand i {
             font-size: 1.5rem;
+        }
+
+        /* Nav Menu */
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--primary-color);
+            background: rgba(212, 96, 138, 0.08);
+        }
+
+        .navbar-menu a.active {
+            color: var(--primary-color);
+            background: rgba(212, 96, 138, 0.1);
+            font-weight: 600;
+        }
+
+        .navbar-menu a i {
+            font-size: 0.8rem;
+        }
+
+        /* Hamburger */
+        .navbar-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .navbar-toggle:hover {
+            background: var(--border-color);
+            color: var(--primary-color);
         }
 
         .navbar-actions {
@@ -212,10 +277,42 @@
             font-size: 0.85rem;
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .navbar-toggle {
+                display: block;
+            }
+
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--bg-white);
+                border-bottom: 1px solid var(--border-color);
+                padding: 0.75rem 1.5rem 1rem;
+                gap: 0.25rem;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            }
+
+            [data-theme="dark"] .navbar-menu {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+
+            .navbar-menu.open {
+                display: flex;
+            }
+
+            .navbar-menu a {
+                width: 100%;
+                padding: 0.65rem 1rem;
             }
 
             .navbar-actions .btn-outline {
@@ -228,16 +325,26 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
+    <nav class="navbar" id="main-navbar">
         <div class="navbar-container">
             <a href="/" class="navbar-brand">
                 <i class="fas fa-university"></i>
                 <span>SIMKA</span>
             </a>
 
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="{{ route('home')}}#home" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="{{ route('home')}}#features"><i class="fas fa-concierge-bell"></i> Layanan</a></li>
+                <li><a href="{{ route('home')}}#syarat-anggota"><i class="fas fa-clipboard-list"></i> Syarat Anggota</a></li>
+                <!-- <li><a href="#stats"><i class="fas fa-chart-bar"></i> Statistik</a></li> -->
+            </ul>
+
             <div class="navbar-actions">
                 <button class="theme-toggle" onclick="toggleTheme()">
                     <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="navbar-toggle" id="navbar-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
                 </button>
                 <a href="{{ route('login') }}" class="btn btn-outline">Masuk</a>
             </div>
@@ -263,6 +370,7 @@
     </footer>
 
     <script>
+        // Theme
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -291,10 +399,23 @@
             if (themeIcon) {
                 themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             }
-       }
+        }
 
         initTheme();
-  
+
+        // Hamburger Toggle
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+
+        if (navbarToggle && navbarMenu) {
+            navbarToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('open');
+                const icon = navbarToggle.querySelector('i');
+                icon.className = navbarMenu.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+            });
+        }
+
+        // Smooth scroll & close mobile menu on click
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -305,8 +426,44 @@
                         block: 'start'
                     });
                 }
+                // Close mobile menu
+                if (navbarMenu) {
+                    navbarMenu.classList.remove('open');
+                    const icon = navbarToggle?.querySelector('i');
+                    if (icon) icon.className = 'fas fa-bars';
+                }
             });
         });
+
+        // Navbar shadow on scroll
+        const navbar = document.getElementById('main-navbar');
+        window.addEventListener('scroll', () => {
+            if (navbar) {
+                navbar.classList.toggle('scrolled', window.scrollY > 10);
+            }
+        });
+
+        // Active link on scroll (Intersection Observer)
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.navbar-menu a');
+
+        if (sections.length && navLinks.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -60% 0px',
+                threshold: 0
+            });
+
+            sections.forEach(section => observer.observe(section));
+        }
     </script>
     {{ $scripts ?? '' }}
 </body>
