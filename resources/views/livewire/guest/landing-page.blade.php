@@ -1,6 +1,6 @@
 <div>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
                 <p class="hero-label">CU Mentari Kasih TP Pomalaa</p>
@@ -53,8 +53,72 @@
         </div>
     </section>
 
+    <!-- Syarat Menjadi Anggota Section -->
+    <section class="section" id="syarat-anggota">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Syarat Menjadi Anggota CU Mentari Kasih</h2>
+                <p class="section-desc">Berikut adalah persyaratan untuk menjadi anggota koperasi</p>
+            </div>
+            <div class="requirements-card">
+                <ol class="requirements-list">
+                    <li>
+                        <div class="req-icon"><i class="fas fa-user-clock"></i></div>
+                        <div class="req-text">Umur maksimal 50 tahun.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-heartbeat"></i></div>
+                        <div class="req-text">Sehat jasmani dan tidak cacat total tetap.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="req-text">Berdomisili tetap minimal 6 (enam) bulan di wilayah pengembangan CU
+                            Mentari Kasih.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-file-signature"></i></div>
+                        <div class="req-text">Menandatangani surat pernyataan untuk mengikuti dan mematuhi AD, ART dan
+                            Kebijakan CUMKS.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="req-text">Mengisi formulir Surat Permohonan Menjadi Anggota (SPMA).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="req-text">Menyerahkan fotocopy KK dan KTP (masing-masing 1 lembar) yang masih
+                            berlaku.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-child"></i></div>
+                        <div class="req-text">Anggota Luar Biasa didaftarkan dan masuk dengan cara PMT oleh orang tua
+                            atau wali yang bersangkutan. Wajib menyertakan fotocopy Akte Kelahiran 1 (satu) lembar.
+                        </div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-camera"></i></div>
+                        <div class="req-text">Menyerahkan pasphoto 2x3 terbaru (2 lembar).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-money-check-alt"></i></div>
+                        <div class="req-text">Anggota baru masuk dengan cara Pinjaman Modal Tabungan (PMT).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <div class="req-text">Telah mengikuti Edukasi Dasar secara penuh selama dua hari.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-receipt"></i></div>
+                        <div class="req-text">Melunasi pembayaran biaya administrasi.</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Stats Section -->
-    <section class="section stats-section">
+    <section class="section stats-section" id="stats">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -202,6 +266,81 @@
                 font-size: 0.9rem;
                 color: var(--text-secondary);
                 line-height: 1.6;
+            }
+
+            /* Requirements */
+            .requirements-card {
+                background: var(--bg-white);
+                border-radius: 14px;
+                border: 1px solid var(--border-color);
+                padding: 2rem;
+            }
+
+            .requirements-list {
+                list-style: none;
+                counter-reset: req-counter;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .requirements-list li {
+                counter-increment: req-counter;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+                border-radius: 10px;
+                background: var(--bg-color);
+                border: 1px solid var(--border-color);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .requirements-list li:hover {
+                transform: translateX(4px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            [data-theme="dark"] .requirements-list li:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            }
+
+            .requirements-list li::before {
+                content: counter(req-counter);
+                min-width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                font-size: 0.8rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 1px;
+            }
+
+            .req-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                background: rgba(212, 96, 138, 0.1);
+                color: var(--primary-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            .req-text {
+                font-size: 0.95rem;
+                color: var(--text-primary);
+                line-height: 1.6;
+                padding-top: 2px;
             }
 
             /* Stats */
