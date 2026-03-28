@@ -16,7 +16,6 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Guest\LandingPage;
 use App\Livewire\Anggota\AnggotaDashboard;
 use App\Livewire\Anggota\PengajuanPinjamanList;
-use App\Livewire\Anggota\PengajuanPinjamanCreate;
 use App\Livewire\Anggota\AnggotaProfile;
 use App\Livewire\Anggota\SimpananList;
 use App\Livewire\Anggota\AngsuranList;
@@ -56,7 +55,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 Route::prefix('anggota')->middleware('auth:anggota')->group(function () {
     Route::get('/dashboard', AnggotaDashboard::class)->name('anggota.dashboard');
     Route::get('/pengajuan-pinjaman', PengajuanPinjamanList::class)->name('anggota.pengajuan-pinjaman');
-    Route::get('/pengajuan-pinjaman/create', PengajuanPinjamanCreate::class)->name('anggota.pengajuan-pinjaman.create');
     Route::get('/simpanan', SimpananList::class)->name('anggota.simpanan');
     Route::get('/notifikasi', NotifikasiList::class)->name('anggota.notifikasi');
     Route::get('/angsuran', AngsuranList::class)->name('anggota.angsuran');
