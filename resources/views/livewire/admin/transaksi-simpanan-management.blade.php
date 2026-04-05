@@ -110,8 +110,7 @@
                                 @if ($status === \App\Enum\StatusPengajuan::PENDING)
                                     <div class="d-flex gap-1">
                                         <button class="action-btn" style="color: var(--success-color);"
-                                            wire:click="approve({{ $t->id }})" wire:confirm="Setujui pengajuan ini?"
-                                            title="Setujui">
+                                            wire:click="openApproveModal({{ $t->id }})" title="Setujui">
                                             <i class="fas fa-check"></i> Setujui
                                         </button>
                                         <button class="action-btn" style="color: var(--danger-color);"
@@ -217,7 +216,7 @@
                         <label for="jumlah" class="form-label">Jumlah (Rp) <span
                                 style="color: var(--danger-color);">*</span></label>
                         <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah"
-                            wire:model="jumlah" min="1" step="1000">
+                            wire:model="jumlah">
                         @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
@@ -236,6 +235,35 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    @endif
+
+    {{-- Approve Modal --}}
+    @if ($showApproveModal)
+        <div class="modal-backdrop-custom" wire:click.self="closeApproveModal">
+            <div class="modal-content-custom" wire:click.stop style="max-width: 450px;">
+                <div class="modal-header-custom">
+                    <h5 class="modal-title-custom"><i class="fas fa-check-circle me-2"
+                            style="color: var(--success-color);"></i>Setujui Pengajuan</h5>
+                    <button type="button" class="modal-close-btn" wire:click="closeApproveModal"><i
+                            class="fas fa-times"></i></button>
+                </div>
+                <div class="p-3">
+                    <p style="font-size: 1.05rem; color: var(--text-primary);">Apakah Anda yakin
+                        ingin menyetujui pengajuan ini?</p>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-modern"
+                            style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);"
+                            wire:click="closeApproveModal">Batal</button>
+                        <button type="button" class="btn btn-modern" style="background: var(--success-color); color: white;"
+                            wire:click="approve">
+                            <span wire:loading.remove wire:target="approve"><i class="fas fa-check me-2"></i>Setujui</span>
+                            <span wire:loading wire:target="approve"><i
+                                    class="fas fa-spinner fa-spin me-2"></i>Memproses...</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
