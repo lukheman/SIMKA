@@ -181,7 +181,7 @@
                             <input type="number"
                                 class="form-control @error('create_jumlah_pengajuan') is-invalid @enderror"
                                 id="create_jumlah_pengajuan" wire:model.live.debounce.300ms="create_jumlah_pengajuan"
-                                placeholder="Masukkan jumlah" min="100000" step="50000">
+                                placeholder="Masukkan jumlah">
                             @error('create_jumlah_pengajuan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

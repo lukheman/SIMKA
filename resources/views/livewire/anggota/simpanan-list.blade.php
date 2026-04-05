@@ -198,7 +198,7 @@
                         <label for="jumlah" class="form-label">Jumlah (Rp) <span
                                 style="color: var(--danger-color);">*</span></label>
                         <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah"
-                            wire:model="jumlah" min="1" step="1000">
+                            wire:model="jumlah">
                         @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
