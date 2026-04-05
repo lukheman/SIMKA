@@ -36,6 +36,10 @@ class TransaksiSimpananManagement extends Component
     public ?float $minimalSetor = null;
     public ?float $saldoAnggota = null;
 
+    // Approve form
+    public bool $showApproveModal = false;
+    public ?int $approveId = null;
+
     // Reject form
     public bool $showRejectModal = false;
     public ?int $rejectId = null;
@@ -146,12 +150,29 @@ class TransaksiSimpananManagement extends Component
         session()->flash('success', 'Transaksi simpanan berhasil ditambahkan.');
     }
 
-    public function approve(int $id): void
+    public function openApproveModal(int $id): void
     {
-        $trx = TransaksiSimpanan::findOrFail($id);
+        $this->approveId = $id;
+        $this->showApproveModal = true;
+    }
 
-        if ($trx->status !== StatusPengajuan::PENDING)
+    public function closeApproveModal(): void
+    {
+        $this->showApproveModal = false;
+        $this->approveId = null;
+    }
+
+    public function approve(): void
+    {
+        if (!$this->approveId)
             return;
+
+        $trx = TransaksiSimpanan::findOrFail($this->approveId);
+
+        if ($trx->status !== StatusPengajuan::PENDING) {
+            $this->closeApproveModal();
+            return;
+        }
 
         // Validate saldo for tarik
         if ($trx->tipe_transaksi === TipeTransaksi::TARIK) {
@@ -169,6 +190,7 @@ class TransaksiSimpananManagement extends Component
 
             if ($trx->jumlah > $saldo) {
                 session()->flash('error', 'Saldo anggota tidak mencukupi untuk penarikan ini.');
+                $this->closeApproveModal();
                 return;
             }
         }
@@ -186,6 +208,7 @@ class TransaksiSimpananManagement extends Component
             'link' => route('anggota.simpanan'),
         ]);
 
+        $this->closeApproveModal();
         session()->flash('success', 'Pengajuan simpanan berhasil disetujui.');
     }
 
