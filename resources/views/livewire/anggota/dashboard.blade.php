@@ -1,4 +1,4 @@
-u<div>
+<div>
     <x-admin.page-header title="Dashboard" subtitle="Ringkasan data pinjaman Anda" />
 
     {{-- Flash Messages --}}
