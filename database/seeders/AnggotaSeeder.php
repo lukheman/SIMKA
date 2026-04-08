@@ -13,12 +13,12 @@ class AnggotaSeeder extends Seeder
      */
     public function run(): void
     {
-        Anggota::factory()->create([
-            'nama_lengkap' => 'Akmal',
-            'email' => 'anggota@gmail.com',
-            'password' => bcrypt('password123')
-        ]);
+        // Anggota::factory()->create([
+        //     'nama_lengkap' => 'Akmal',
+        //     'email' => 'anggota@gmail.com',
+        //     'password' => bcrypt('password123')
+        // ]);
 
-        \App\Models\Anggota::factory(10)->create();
+        // \App\Models\Anggota::factory(10)->create();
     }
 }

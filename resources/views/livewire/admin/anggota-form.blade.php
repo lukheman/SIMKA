@@ -121,7 +121,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3" x-data="{ show: false }">
                     <label for="password" class="form-label">
                         Password
                         @if (!$anggotaId)
@@ -130,17 +130,31 @@
                             <small class="text-muted">(kosongkan jika tidak diubah)</small>
                         @endif
                     </label>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                        wire:model="password" placeholder="{{ $anggotaId ? 'Password baru' : 'Masukkan password' }}">
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="input-group">
+                        <input :type="show ? 'text' : 'password'"
+                            class="form-control @error('password') is-invalid @enderror" id="password"
+                            wire:model="password"
+                            placeholder="{{ $anggotaId ? 'Password baru' : 'Masukkan password' }}">
+                        <button type="button" class="btn btn-outline-secondary" @click="show = !show"
+                            style="border-color: var(--border-color); border-top-right-radius: 0.375rem; border-bottom-right-radius: 0.375rem;">
+                            <i class="fas" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </button>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3" x-data="{ show: false }">
                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                    <input type="password" class="form-control" id="password_confirmation"
-                        wire:model="password_confirmation" placeholder="Ulangi password">
+                    <div class="input-group">
+                        <input :type="show ? 'text' : 'password'" class="form-control" id="password_confirmation"
+                            wire:model="password_confirmation" placeholder="Ulangi password">
+                        <button type="button" class="btn btn-outline-secondary" @click="show = !show"
+                            style="border-color: var(--border-color); border-top-right-radius: 0.375rem; border-bottom-right-radius: 0.375rem;">
+                            <i class="fas" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 

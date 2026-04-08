@@ -12,6 +12,6 @@ class AngsuranSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Angsuran::factory(10)->create();
+        // \App\Models\Angsuran::factory(10)->create();
     }
 }

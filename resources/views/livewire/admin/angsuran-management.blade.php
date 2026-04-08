@@ -309,8 +309,10 @@
                             <span class="text-muted" style="font-size: 0.8rem;">
                                 {{ $a->tgl_bayar ? \Carbon\Carbon::parse($a->tgl_bayar)->format('d M Y') : '—' }}
                             </span>
-                        @else
-                            <span class="text-muted">—</span>
+                        @elseif($a->status_bayar === \App\Enum\StatusBayar::BELUM)
+                            <button wire:click="openBayarModal({{ $a->id }})" class="btn btn-sm btn-modern btn-primary-modern">
+                                <i class="fas fa-cash-register me-1"></i> Bayar
+                            </button>
                         @endif
                     </td>
                 </tr>
@@ -529,4 +531,91 @@
             </div>
         </div>
     @endif
+
+    {{-- Bayar Langsung Modal --}}
+    @if($showBayarModal && $bayarAngsuran)
+        <div class="modal-backdrop fade show"></div>
+        <div class="modal fade show d-block" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border-radius: 16px; border: none;">
+                    <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+                        <h5 class="modal-title fw-bold"><i class="fas fa-cash-register me-2"></i>Bayar Angsuran (Offline)</h5>
+                        <button type="button" class="btn-close" wire:click="closeBayarModal"></button>
+                    </div>
+                    <form wire:submit="bayarLangsung">
+                        <div class="modal-body">
+                            {{-- Info Angsuran --}}
+                            <div class="mb-3 p-3" style="background: var(--bg-light); border-radius: 10px;">
+                                <div class="row g-2" style="font-size: 0.9rem;">
+                                    <div class="col-6">
+                                        <span class="text-muted">Anggota:</span><br>
+                                        <span class="fw-semibold">{{ $bayarAngsuran->pengajuanPinjaman->anggota->nama_lengkap }}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Angsuran Ke:</span><br>
+                                        <span class="fw-semibold">{{ $bayarAngsuran->angsuran_ke }}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Jatuh Tempo:</span><br>
+                                        <span class="fw-semibold">{{ \Carbon\Carbon::parse($bayarAngsuran->tgl_jatuh_tempo)->format('d M Y') }}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="text-muted">Pokok + Bunga:</span><br>
+                                        <span class="fw-semibold">Rp {{ number_format($bayarAngsuran->jumlah_pokok + $bayarAngsuran->jumlah_bunga, 0, ',', '.') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Bukti Bayar (Optional) --}}
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Bukti Pembayaran <small class="text-muted fw-normal">(opsional)</small></label>
+                                <input type="file" wire:model="bayarBuktiBayar" class="form-control" accept="image/*"
+                                    style="border-radius: 10px; border: 1.5px solid var(--border-color);">
+                                <small class="text-muted">Format: JPG, PNG. Maks 2MB.</small>
+                                @error('bayarBuktiBayar')
+                                    <div class="mt-1"><small class="text-danger">{{ $message }}</small></div>
+                                @enderror
+                            </div>
+
+                            @if($bayarBuktiBayar)
+                                <div class="mb-3 text-center">
+                                    <p class="text-muted mb-2" style="font-size: 0.85rem;">Preview:</p>
+                                    <img src="{{ $bayarBuktiBayar->temporaryUrl() }}" alt="Preview"
+                                        style="max-width: 100%; max-height: 200px; border-radius: 10px; border: 1px solid var(--border-color);">
+                                </div>
+                            @endif
+
+                            {{-- Denda --}}
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Denda (Rp)</label>
+                                <input type="number" wire:model="bayarDenda" class="form-control"
+                                    style="border-radius: 10px; border: 1.5px solid var(--border-color);" min="0" step="1000">
+                                @error('bayarDenda')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- Total --}}
+                            <div class="p-3" style="background: rgba(16,185,129,0.08); border-radius: 10px;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-semibold">Total Bayar:</span>
+                                    <span class="fw-bold" style="font-size: 1.15rem; color: var(--success-color);">
+                                        Rp {{ number_format($bayarAngsuran->jumlah_pokok + $bayarAngsuran->jumlah_bunga + (float) $bayarDenda, 0, ',', '.') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
+                            <button type="button" class="btn btn-modern" wire:click="closeBayarModal">Batal</button>
+                            <button type="submit" class="btn btn-modern btn-success-modern" wire:loading.attr="disabled">
+                                <span wire:loading.remove><i class="fas fa-check me-1"></i> Bayar & Lunaskan</span>
+                                <span wire:loading><i class="fas fa-spinner fa-spin me-1"></i> Memproses...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
 </div>

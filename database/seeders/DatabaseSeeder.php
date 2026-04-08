@@ -31,19 +31,13 @@ class DatabaseSeeder extends Seeder
             'role' => UserRole::PIMPINAN,
         ]);
 
-        Anggota::factory()->create([
-            'email' => 'anggota1@gmail.com',
-            'password' => 'password123',
-            'status_aktif' => StatusAktif::AKTIF
-        ]);
-
         $this->call([
-            AnggotaSeeder::class,
-            JenisSimpananSeeder::class,
-            TransaksiSimpananSeeder::class,
-            JenisPinjamanSeeder::class,
-            PengajuanPinjamanSeeder::class,
-            AngsuranSeeder::class,
+            // AnggotaSeeder::class,
+            // JenisSimpananSeeder::class,
+            // TransaksiSimpananSeeder::class,
+            // JenisPinjamanSeeder::class,
+            // PengajuanPinjamanSeeder::class,
+            // AngsuranSeeder::class,
         ]);
     }
 }

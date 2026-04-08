@@ -9,17 +9,19 @@ use App\Models\Anggota;
 use App\Models\Angsuran;
 use App\Models\Notifikasi;
 use App\Models\PengajuanPinjaman;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 #[Layout('components.admin.livewire-layout')]
 #[Title('Manajemen Angsuran')]
 class AngsuranManagement extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     // View state: 'anggota' | 'pinjaman' | 'angsuran' | 'pending'
     public string $view = 'anggota';
@@ -43,6 +45,13 @@ class AngsuranManagement extends Component
     // Reject modal
     public bool $showRejectModal = false;
     public ?int $rejectingId = null;
+
+    // Bayar langsung modal
+    public bool $showBayarModal = false;
+    public ?int $bayarAngsuranId = null;
+    public ?Angsuran $bayarAngsuran = null;
+    public string $bayarDenda = '0';
+    public $bayarBuktiBayar;
 
     // Preview modal
     public bool $showPreviewModal = false;
@@ -204,6 +213,81 @@ class AngsuranManagement extends Component
         $this->verifyingId = null;
         $this->rejectingId = null;
         $this->verifyingAngsuran = null;
+    }
+
+    // ─── Bayar Langsung (Admin Offline) ───
+
+    public function openBayarModal(int $id): void
+    {
+        $this->bayarAngsuran = Angsuran::with('pengajuanPinjaman.anggota')->findOrFail($id);
+        $this->bayarAngsuranId = $id;
+        $this->bayarDenda = '0';
+        $this->bayarBuktiBayar = null;
+        $this->resetValidation();
+        $this->showBayarModal = true;
+    }
+
+    public function bayarLangsung(): void
+    {
+        $this->validate([
+            'bayarDenda' => ['required', 'numeric', 'min:0'],
+            'bayarBuktiBayar' => ['nullable', 'image', 'max:2048'],
+        ]);
+
+        $angsuran = Angsuran::with('pengajuanPinjaman.anggota')->findOrFail($this->bayarAngsuranId);
+        $totalBayar = $angsuran->jumlah_pokok + $angsuran->jumlah_bunga + (float) $this->bayarDenda;
+
+        $path = null;
+        if ($this->bayarBuktiBayar) {
+            $path = $this->bayarBuktiBayar->store('bukti-angsuran', 'public');
+        }
+
+        $angsuran->update([
+            'denda' => (float) $this->bayarDenda,
+            'total_bayar' => $totalBayar,
+            'tgl_bayar' => now()->toDateString(),
+            'status_bayar' => StatusBayar::LUNAS,
+            'bukti_bayar' => $path,
+        ]);
+
+        // Check if all installments are paid
+        $pinjamanId = $angsuran->pengajuan_pinjaman_id;
+        $belumLunas = Angsuran::where('pengajuan_pinjaman_id', $pinjamanId)
+            ->where('status_bayar', '!=', StatusBayar::LUNAS)
+            ->count();
+
+        if ($belumLunas === 0) {
+            PengajuanPinjaman::where('id', $pinjamanId)
+                ->update(['status' => StatusPengajuan::LUNAS->value]);
+
+            Notifikasi::create([
+                'anggota_id' => $angsuran->pengajuanPinjaman->anggota_id,
+                'judul' => 'Pinjaman Lunas',
+                'pesan' => 'Selamat! Pinjaman Anda telah lunas. Terima kasih atas pembayaran Anda.',
+                'tipe' => TipeNotifikasi::SUKSES,
+                'link' => route('anggota.angsuran'),
+            ]);
+        }
+
+        Notifikasi::create([
+            'anggota_id' => $angsuran->pengajuanPinjaman->anggota_id,
+            'judul' => 'Pembayaran Angsuran Ke-' . $angsuran->angsuran_ke . ' Diterima',
+            'pesan' => 'Pembayaran angsuran ke-' . $angsuran->angsuran_ke . ' sebesar Rp ' . number_format($totalBayar, 0, ',', '.') . ' telah dibayarkan melalui admin.',
+            'tipe' => TipeNotifikasi::SUKSES,
+            'link' => route('anggota.angsuran'),
+        ]);
+
+        $this->closeBayarModal();
+        session()->flash('success', 'Pembayaran angsuran berhasil dicatat.');
+    }
+
+    public function closeBayarModal(): void
+    {
+        $this->showBayarModal = false;
+        $this->bayarAngsuranId = null;
+        $this->bayarAngsuran = null;
+        $this->bayarDenda = '0';
+        $this->bayarBuktiBayar = null;
     }
 
     // ─── Render ───
