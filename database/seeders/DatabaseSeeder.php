@@ -33,9 +33,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             // AnggotaSeeder::class,
-            // JenisSimpananSeeder::class,
+            JenisSimpananSeeder::class,
             // TransaksiSimpananSeeder::class,
-            // JenisPinjamanSeeder::class,
+            JenisPinjamanSeeder::class,
             // PengajuanPinjamanSeeder::class,
             // AngsuranSeeder::class,
         ]);
