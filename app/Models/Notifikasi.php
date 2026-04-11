@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Enum\TipeNotifikasi;
+use App\Observers\NotifikasiObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(NotifikasiObserver::class)]
 class Notifikasi extends Model
 {
     use HasFactory;
