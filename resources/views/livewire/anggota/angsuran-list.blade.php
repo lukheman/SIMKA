@@ -37,24 +37,29 @@
             @php
                 $totalAngsuran = $angsurans->sum(fn($a) => $a->jumlah_pokok + $a->jumlah_bunga);
                 $totalDibayar = $angsurans->where('status_bayar', \App\Enum\StatusBayar::LUNAS)->sum('total_bayar');
+                $sisaAngsuran = $angsurans->where('status_bayar', '!=', \App\Enum\StatusBayar::LUNAS)->sum(fn($a) => $a->jumlah_pokok + $a->jumlah_bunga);
                 $sisaBelum = $angsurans->where('status_bayar', \App\Enum\StatusBayar::BELUM)->count();
                 $menunggu = $angsurans->where('status_bayar', \App\Enum\StatusBayar::MENUNGGU)->count();
                 $sudahBayar = $angsurans->where('status_bayar', \App\Enum\StatusBayar::LUNAS)->count();
             @endphp
             <div class="row g-3 mb-4">
-                <div class="col-md-3 col-6">
+                <div class="col-lg col-md-4 col-6">
                     <x-admin.stat-card icon="fas fa-money-bill-wave" label="Total Angsuran"
                         value="Rp {{ number_format($totalAngsuran, 0, ',', '.') }}" variant="primary" />
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-lg col-md-4 col-6">
+                    <x-admin.stat-card icon="fas fa-wallet" label="Sisa Angsuran"
+                        value="Rp {{ number_format($sisaAngsuran, 0, ',', '.') }}" variant="info" />
+                </div>
+                <div class="col-lg col-md-4 col-6">
                     <x-admin.stat-card icon="fas fa-check-circle" label="Lunas"
                         value="{{ $sudahBayar }}/{{ $angsurans->count() }}" variant="success" />
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-lg col-md-6 col-6">
                     <x-admin.stat-card icon="fas fa-clock" label="Menunggu Verifikasi" value="{{ $menunggu }}"
                         variant="primary" />
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-lg col-md-6 col-6">
                     <x-admin.stat-card icon="fas fa-hourglass-half" label="Belum Bayar" value="{{ $sisaBelum }}"
                         variant="warning" />
                 </div>
