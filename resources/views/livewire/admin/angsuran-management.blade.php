@@ -482,7 +482,7 @@
                         </div>
                         <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
                             <button type="button" class="btn btn-modern" wire:click="closeModal">Batal</button>
-                            <button type="submit" class="btn btn-modern btn-success-modern">
+                            <button type="submit" class="btn btn-modern btn-primary-modern">
                                 <i class="fas fa-check me-1"></i> Verifikasi & Terima
                             </button>
                         </div>
@@ -607,7 +607,7 @@
                         </div>
                         <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
                             <button type="button" class="btn btn-modern" wire:click="closeBayarModal">Batal</button>
-                            <button type="submit" class="btn btn-modern btn-success-modern" wire:loading.attr="disabled">
+                            <button type="submit" class="btn btn-modern btn-primary-modern" wire:loading.attr="disabled">
                                 <span wire:loading.remove><i class="fas fa-check me-1"></i> Bayar & Lunaskan</span>
                                 <span wire:loading><i class="fas fa-spinner fa-spin me-1"></i> Memproses...</span>
                             </button>
