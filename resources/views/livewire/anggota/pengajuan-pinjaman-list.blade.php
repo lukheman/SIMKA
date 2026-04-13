@@ -1,5 +1,5 @@
 <div>
-    <x-admin.page-header title="Pengajuan Pinjaman" subtitle="Daftar pengajuan pinjaman Anda">
+    <x-admin.page-header title="Pinjaman" subtitle="Daftar pengajuan pinjaman Anda">
     </x-admin.page-header>
 
     {{-- Flash Messages --}}

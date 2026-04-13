@@ -616,7 +616,7 @@
 
                 <x-admin.sidebar-section title="Transaksi">
                     <x-admin.sidebar-link href="{{ route('admin.transaksi-simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('admin.transaksi-simpanan')">Transaksi Simpanan</x-admin.sidebar-link>
-                    <x-admin.sidebar-link href="{{ route('admin.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('admin.pengajuan-pinjaman')">Pengajuan Pinjaman</x-admin.sidebar-link>
+                    <x-admin.sidebar-link href="{{ route('admin.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('admin.pengajuan-pinjaman')">Pinjaman</x-admin.sidebar-link>
                     <x-admin.sidebar-link href="{{ route('admin.angsuran') }}" icon="fas fa-money-bill-wave" :active="request()->routeIs('admin.angsuran')">Angsuran</x-admin.sidebar-link>
                 </x-admin.sidebar-section>
 
@@ -655,7 +655,7 @@
 
             <x-admin.sidebar-section title="Transaksi">
                 <x-admin.sidebar-link href="{{ route('anggota.simpanan') }}" icon="fas fa-piggy-bank" :active="request()->routeIs('anggota.simpanan')">Simpanan</x-admin.sidebar-link>
-                <x-admin.sidebar-link href="{{ route('anggota.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('anggota.pengajuan-pinjaman*')">Pengajuan Pinjaman</x-admin.sidebar-link>
+                <x-admin.sidebar-link href="{{ route('anggota.pengajuan-pinjaman') }}" icon="fas fa-file-invoice-dollar" :active="request()->routeIs('anggota.pengajuan-pinjaman*')">Pinjaman</x-admin.sidebar-link>
                 <x-admin.sidebar-link href="{{ route('anggota.angsuran') }}" icon="fas fa-money-bill-wave" :active="request()->routeIs('anggota.angsuran')">Angsuran</x-admin.sidebar-link>
             </x-admin.sidebar-section>
 
