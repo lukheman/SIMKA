@@ -26,8 +26,10 @@ class TransaksiSimpananManagement extends Component
     public string $filterJenis = '';
     public string $filterStatus = '';
 
-    // Create form
+    // Create/Edit form
     public bool $showCreateModal = false;
+    public bool $isEditing = false;
+    public ?int $editId = null;
     public $anggota_id = '';
     public $jenis_simpanan_id = '';
     public $tipe_transaksi = '';
@@ -44,6 +46,10 @@ class TransaksiSimpananManagement extends Component
     public bool $showRejectModal = false;
     public ?int $rejectId = null;
     public string $alasan_tolak = '';
+
+    // Delete form
+    public bool $showDeleteModal = false;
+    public ?int $deleteId = null;
 
     public function updatedSearch()
     {
@@ -99,13 +105,32 @@ class TransaksiSimpananManagement extends Component
     public function openCreateModal(): void
     {
         $this->resetValidation();
-        $this->reset(['anggota_id', 'jenis_simpanan_id', 'tipe_transaksi', 'jumlah', 'keterangan', 'minimalSetor', 'saldoAnggota']);
+        $this->reset(['anggota_id', 'jenis_simpanan_id', 'tipe_transaksi', 'jumlah', 'keterangan', 'minimalSetor', 'saldoAnggota', 'isEditing', 'editId']);
+        $this->showCreateModal = true;
+    }
+
+    public function openEditModal(int $id): void
+    {
+        $this->resetValidation();
+        $trx = TransaksiSimpanan::findOrFail($id);
+
+        $this->editId = $id;
+        $this->isEditing = true;
+        $this->anggota_id = $trx->anggota_id;
+        $this->jenis_simpanan_id = $trx->jenis_simpanan_id;
+        $this->tipe_transaksi = $trx->tipe_transaksi instanceof \App\Enum\TipeTransaksi ? $trx->tipe_transaksi->value : $trx->tipe_transaksi;
+        $this->jumlah = $trx->jumlah;
+        $this->keterangan = $trx->keterangan;
+        $this->minimalSetor = $trx->jenisSimpanan?->minimal_setor;
+        $this->updateSaldo();
         $this->showCreateModal = true;
     }
 
     public function closeModal(): void
     {
         $this->showCreateModal = false;
+        $this->isEditing = false;
+        $this->editId = null;
     }
 
     public function save(): void
@@ -148,6 +173,60 @@ class TransaksiSimpananManagement extends Component
 
         $this->closeModal();
         session()->flash('success', 'Transaksi simpanan berhasil ditambahkan.');
+    }
+
+    public function update(): void
+    {
+        if (!$this->editId) return;
+
+        $this->validate([
+            'anggota_id' => ['required', 'exists:anggota,id'],
+            'jenis_simpanan_id' => ['required', 'exists:jenis_simpanan,id'],
+            'tipe_transaksi' => ['required', 'in:setor,tarik'],
+            'jumlah' => ['required', 'numeric', 'min:1'],
+            'keterangan' => ['nullable', 'string'],
+        ]);
+
+        $jenis = JenisSimpanan::find($this->jenis_simpanan_id);
+
+        if ($this->tipe_transaksi === 'setor' && $this->jumlah < $jenis->minimal_setor) {
+            $this->addError('jumlah', 'Jumlah setor minimal Rp ' . number_format($jenis->minimal_setor, 0, ',', '.'));
+            return;
+        }
+
+        if ($this->tipe_transaksi === 'tarik') {
+            // Calculate saldo excluding current transaction
+            $setor = TransaksiSimpanan::where('anggota_id', $this->anggota_id)
+                ->where('jenis_simpanan_id', $this->jenis_simpanan_id)
+                ->where('tipe_transaksi', TipeTransaksi::SETOR->value)
+                ->where('status', StatusPengajuan::DISETUJUI->value)
+                ->where('id', '!=', $this->editId)
+                ->sum('jumlah');
+            $tarik = TransaksiSimpanan::where('anggota_id', $this->anggota_id)
+                ->where('jenis_simpanan_id', $this->jenis_simpanan_id)
+                ->where('tipe_transaksi', TipeTransaksi::TARIK->value)
+                ->where('status', StatusPengajuan::DISETUJUI->value)
+                ->where('id', '!=', $this->editId)
+                ->sum('jumlah');
+            $saldo = $setor - $tarik;
+
+            if ($this->jumlah > $saldo) {
+                $this->addError('jumlah', 'Saldo tidak mencukupi. Saldo: Rp ' . number_format($saldo, 0, ',', '.'));
+                return;
+            }
+        }
+
+        $trx = TransaksiSimpanan::findOrFail($this->editId);
+        $trx->update([
+            'anggota_id' => $this->anggota_id,
+            'jenis_simpanan_id' => $this->jenis_simpanan_id,
+            'tipe_transaksi' => $this->tipe_transaksi,
+            'jumlah' => $this->jumlah,
+            'keterangan' => $this->keterangan,
+        ]);
+
+        $this->closeModal();
+        session()->flash('success', 'Transaksi simpanan berhasil diperbarui.');
     }
 
     public function openApproveModal(int $id): void
@@ -251,6 +330,29 @@ class TransaksiSimpananManagement extends Component
 
         $this->closeRejectModal();
         session()->flash('success', 'Pengajuan simpanan ditolak.');
+    }
+
+    public function openDeleteModal(int $id): void
+    {
+        $this->deleteId = $id;
+        $this->showDeleteModal = true;
+    }
+
+    public function closeDeleteModal(): void
+    {
+        $this->showDeleteModal = false;
+        $this->deleteId = null;
+    }
+
+    public function delete(): void
+    {
+        if (!$this->deleteId) return;
+
+        $trx = TransaksiSimpanan::findOrFail($this->deleteId);
+        $trx->delete();
+
+        $this->closeDeleteModal();
+        session()->flash('success', 'Transaksi simpanan berhasil dihapus.');
     }
 
     public function render()

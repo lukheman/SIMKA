@@ -107,8 +107,8 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($status === \App\Enum\StatusPengajuan::PENDING)
-                                    <div class="d-flex gap-1">
+                                <div class="d-flex gap-1">
+                                    @if ($status === \App\Enum\StatusPengajuan::PENDING)
                                         <button class="action-btn" style="color: var(--success-color);"
                                             wire:click="openApproveModal({{ $t->id }})" title="Setujui">
                                             <i class="fas fa-check"></i> Setujui
@@ -117,10 +117,16 @@
                                             wire:click="openRejectModal({{ $t->id }})" title="Tolak">
                                             <i class="fas fa-times"></i> Tolak
                                         </button>
-                                    </div>
-                                @else
-                                    <span class="text-muted">—</span>
-                                @endif
+                                    @endif
+                                    <button class="action-btn" style="color: var(--warning-color);"
+                                        wire:click="openEditModal({{ $t->id }})" title="Edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="action-btn" style="color: var(--danger-color);"
+                                        wire:click="openDeleteModal({{ $t->id }})" title="Hapus">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -147,16 +153,18 @@
         <div class="modal-backdrop-custom" wire:click.self="closeModal">
             <div class="modal-content-custom" wire:click.stop style="max-width: 500px;">
                 <div class="modal-header-custom">
-                    <h5 class="modal-title-custom"><i class="fas fa-plus-circle me-2"
-                            style="color: var(--primary-color);"></i>Transaksi Baru (Admin)</h5>
+                    <h5 class="modal-title-custom"><i class="fas {{ $isEditing ? 'fa-edit' : 'fa-plus-circle' }} me-2"
+                            style="color: var(--primary-color);"></i>{{ $isEditing ? 'Edit Transaksi' : 'Transaksi Baru (Admin)' }}</h5>
                     <button type="button" class="modal-close-btn" wire:click="closeModal"><i
                             class="fas fa-times"></i></button>
                 </div>
+                @if (!$isEditing)
                 <div class="mb-2 p-2 rounded-2"
                     style="background: rgba(92,173,138,0.08); border: 1px solid rgba(92,173,138,0.2); font-size: 0.8rem; color: var(--success-color);">
                     <i class="fas fa-info-circle me-1"></i> Transaksi dari admin otomatis disetujui
                 </div>
-                <form wire:submit="save">
+                @endif
+                <form wire:submit="{{ $isEditing ? 'update' : 'save' }}">
                     <div class="mb-3">
                         <label for="anggota_id" class="form-label">Anggota <span
                                 style="color: var(--danger-color);">*</span></label>
@@ -229,9 +237,9 @@
                             style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);"
                             wire:click="closeModal">Batal</button>
                         <button type="submit" class="btn btn-modern btn-primary-modern">
-                            <span wire:loading.remove wire:target="save"><i class="fas fa-save me-2"></i>Simpan</span>
-                            <span wire:loading wire:target="save"><i
-                                    class="fas fa-spinner fa-spin me-2"></i>Menyimpan...</span>
+                            <span wire:loading.remove wire:target="{{ $isEditing ? 'update' : 'save' }}"><i class="fas fa-save me-2"></i>{{ $isEditing ? 'Perbarui' : 'Simpan' }}</span>
+                            <span wire:loading wire:target="{{ $isEditing ? 'update' : 'save' }}"><i
+                                    class="fas fa-spinner fa-spin me-2"></i>{{ $isEditing ? 'Memperbarui...' : 'Menyimpan...' }}</span>
                         </button>
                     </div>
                 </form>
@@ -297,6 +305,35 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    @endif
+
+    {{-- Delete Modal --}}
+    @if ($showDeleteModal)
+        <div class="modal-backdrop-custom" wire:click.self="closeDeleteModal">
+            <div class="modal-content-custom" wire:click.stop style="max-width: 450px;">
+                <div class="modal-header-custom">
+                    <h5 class="modal-title-custom"><i class="fas fa-trash-alt me-2"
+                            style="color: var(--danger-color);"></i>Hapus Transaksi</h5>
+                    <button type="button" class="modal-close-btn" wire:click="closeDeleteModal"><i
+                            class="fas fa-times"></i></button>
+                </div>
+                <div class="p-3">
+                    <p style="font-size: 1.05rem; color: var(--text-primary);">Apakah Anda yakin ingin menghapus
+                        transaksi ini? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-modern"
+                            style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);"
+                            wire:click="closeDeleteModal">Batal</button>
+                        <button type="button" class="btn btn-modern" style="background: var(--danger-color); color: white;"
+                            wire:click="delete">
+                            <span wire:loading.remove wire:target="delete"><i class="fas fa-trash me-2"></i>Hapus</span>
+                            <span wire:loading wire:target="delete"><i
+                                    class="fas fa-spinner fa-spin me-2"></i>Menghapus...</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
