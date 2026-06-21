@@ -165,19 +165,43 @@
                 </div>
                 @endif
                 <form wire:submit="{{ $isEditing ? 'update' : 'save' }}">
-                    <div class="mb-3">
-                        <label for="anggota_id" class="form-label">Anggota <span
-                                style="color: var(--danger-color);">*</span></label>
-                        <input type="text" class="form-control mb-2" placeholder="Ketik untuk mencari nama atau no anggota..." wire:model.live.debounce.300ms="searchAnggota">
-                        <select class="form-control @error('anggota_id') is-invalid @enderror" id="anggota_id"
-                            wire:model.live="anggota_id">
-                            <option value="">-- Pilih Anggota --</option>
-                            @foreach ($anggotas as $anggota)
-                                <option value="{{ $anggota->id }}">{{ $anggota->no_anggota }} - {{ $anggota->nama_lengkap }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('anggota_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="mb-3 position-relative" x-data="{ showDropdown: false }">
+                        <label class="form-label">Anggota <span style="color: var(--danger-color);">*</span></label>
+                        
+                        <input type="hidden" wire:model.live="anggota_id">
+                        
+                        <div class="input-group">
+                            <span class="input-group-text" style="background: var(--input-bg); border-color: var(--border-color);">
+                                <i class="fas fa-search" style="color: var(--text-muted);"></i>
+                            </span>
+                            <input type="text" class="form-control @error('anggota_id') is-invalid @enderror" 
+                                placeholder="Ketik untuk mencari nama atau no anggota..." 
+                                wire:model.live.debounce.300ms="searchAnggota"
+                                x-on:focus="showDropdown = true"
+                                x-on:click.away="showDropdown = false"
+                                style="border-left: none;">
+                        </div>
+                        
+                        @if(empty($anggota_id))
+                            <div x-show="showDropdown" x-cloak class="position-absolute shadow-sm rounded" style="z-index: 1050; max-height: 220px; overflow-y: auto; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); margin-top: 4px;">
+                                @forelse ($anggotas as $anggota)
+                                    <div class="p-2 border-bottom" style="cursor: pointer; transition: background 0.2s; background: var(--bg-primary);" 
+                                         onmouseover="this.style.backgroundColor='var(--bg-tertiary)'" 
+                                         onmouseout="this.style.backgroundColor='var(--bg-primary)'"
+                                         wire:click="selectAnggota('{{ $anggota->id }}', '{{ addslashes($anggota->nama_lengkap) }}')"
+                                         x-on:click="showDropdown = false">
+                                        <div class="fw-bold" style="color: var(--text-primary); font-size: 0.9rem;">{{ $anggota->nama_lengkap }}</div>
+                                        <small class="text-muted"><i class="fas fa-id-badge me-1"></i>{{ $anggota->no_anggota }}</small>
+                                    </div>
+                                @empty
+                                    <div class="p-3 text-center text-muted small">
+                                        Anggota tidak ditemukan
+                                    </div>
+                                @endforelse
+                            </div>
+                        @endif
+                        
+                        @error('anggota_id')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
                         <label for="jenis_simpanan_id" class="form-label">Jenis Simpanan <span

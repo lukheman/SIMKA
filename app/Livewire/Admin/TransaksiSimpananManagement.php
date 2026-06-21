@@ -69,6 +69,19 @@ class TransaksiSimpananManagement extends Component
         $this->resetPage();
     }
 
+    public function updatedSearchAnggota()
+    {
+        $this->anggota_id = '';
+    }
+
+    public function selectAnggota($id, $nama)
+    {
+        $this->anggota_id = $id;
+        $this->searchAnggota = $nama;
+        $this->resetValidation('anggota_id');
+        $this->updateSaldo();
+    }
+
     public function updatedJenisSimpananId($value)
     {
         $this->minimalSetor = $value ? JenisSimpanan::find($value)?->minimal_setor : null;
@@ -379,10 +392,10 @@ class TransaksiSimpananManagement extends Component
 
         return view('livewire.admin.transaksi-simpanan-management', [
             'transaksis' => $query->paginate(15),
-            'anggotas' => Anggota::when($this->searchAnggota, function ($q) {
+            'anggotas' => Anggota::when($this->searchAnggota && !$this->anggota_id, function ($q) {
                 $q->where('nama_lengkap', 'like', '%' . $this->searchAnggota . '%')
                   ->orWhere('no_anggota', 'like', '%' . $this->searchAnggota . '%');
-            })->orderBy('nama_lengkap')->get(),
+            })->orderBy('nama_lengkap')->take(20)->get(),
             'jenisSimpanans' => JenisSimpanan::all(),
             'tipeOptions' => TipeTransaksi::cases(),
             'statusOptions' => [StatusPengajuan::PENDING, StatusPengajuan::DISETUJUI, StatusPengajuan::DITOLAK],

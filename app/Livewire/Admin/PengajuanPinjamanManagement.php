@@ -58,6 +58,18 @@ class PengajuanPinjamanManagement extends Component
         $this->resetPage();
     }
 
+    public function updatedSearchAnggota(): void
+    {
+        $this->create_anggota_id = '';
+    }
+
+    public function selectAnggota($id, $nama): void
+    {
+        $this->create_anggota_id = $id;
+        $this->searchAnggota = $nama;
+        $this->resetValidation('create_anggota_id');
+    }
+
     // === Create loan methods ===
 
     public function openCreateModal(): void
@@ -273,10 +285,10 @@ class PengajuanPinjamanManagement extends Component
         return view('livewire.admin.pengajuan-pinjaman-management', [
             'pengajuans' => $pengajuans,
             'statusOptions' => StatusPengajuan::cases(),
-            'anggotaList' => Anggota::when($this->searchAnggota, function ($q) {
+            'anggotaList' => Anggota::when($this->searchAnggota && !$this->create_anggota_id, function ($q) {
                 $q->where('nama_lengkap', 'like', '%' . $this->searchAnggota . '%')
                   ->orWhere('no_anggota', 'like', '%' . $this->searchAnggota . '%');
-            })->orderBy('nama_lengkap')->get(),
+            })->orderBy('nama_lengkap')->take(20)->get(),
             'jenisPinjamanList' => JenisPinjaman::all(),
         ]);
     }
