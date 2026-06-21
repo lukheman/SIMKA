@@ -37,6 +37,7 @@ class TransaksiSimpananManagement extends Component
     public $keterangan = '';
     public ?float $minimalSetor = null;
     public ?float $saldoAnggota = null;
+    public string $searchAnggota = '';
 
     // Approve form
     public bool $showApproveModal = false;
@@ -105,13 +106,14 @@ class TransaksiSimpananManagement extends Component
     public function openCreateModal(): void
     {
         $this->resetValidation();
-        $this->reset(['anggota_id', 'jenis_simpanan_id', 'tipe_transaksi', 'jumlah', 'keterangan', 'minimalSetor', 'saldoAnggota', 'isEditing', 'editId']);
+        $this->reset(['anggota_id', 'jenis_simpanan_id', 'tipe_transaksi', 'jumlah', 'keterangan', 'minimalSetor', 'saldoAnggota', 'isEditing', 'editId', 'searchAnggota']);
         $this->showCreateModal = true;
     }
 
     public function openEditModal(int $id): void
     {
         $this->resetValidation();
+        $this->reset('searchAnggota');
         $trx = TransaksiSimpanan::findOrFail($id);
 
         $this->editId = $id;
@@ -377,7 +379,10 @@ class TransaksiSimpananManagement extends Component
 
         return view('livewire.admin.transaksi-simpanan-management', [
             'transaksis' => $query->paginate(15),
-            'anggotas' => Anggota::orderBy('nama_lengkap')->get(),
+            'anggotas' => Anggota::when($this->searchAnggota, function ($q) {
+                $q->where('nama_lengkap', 'like', '%' . $this->searchAnggota . '%')
+                  ->orWhere('no_anggota', 'like', '%' . $this->searchAnggota . '%');
+            })->orderBy('nama_lengkap')->get(),
             'jenisSimpanans' => JenisSimpanan::all(),
             'tipeOptions' => TipeTransaksi::cases(),
             'statusOptions' => [StatusPengajuan::PENDING, StatusPengajuan::DISETUJUI, StatusPengajuan::DITOLAK],

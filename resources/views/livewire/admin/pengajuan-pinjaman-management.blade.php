@@ -118,6 +118,7 @@
                         <div class="col-12">
                             <label for="create_anggota_id" class="form-label">Anggota <span
                                     style="color: var(--danger-color);">*</span></label>
+                            <input type="text" class="form-control mb-2" placeholder="Ketik untuk mencari nama atau no anggota..." wire:model.live.debounce.300ms="searchAnggota">
                             <select class="form-control @error('create_anggota_id') is-invalid @enderror"
                                 id="create_anggota_id" wire:model="create_anggota_id">
                                 <option value="">-- Pilih Anggota --</option>

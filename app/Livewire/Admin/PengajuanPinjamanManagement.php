@@ -36,6 +36,7 @@ class PengajuanPinjamanManagement extends Component
     public float $create_bunga_persen = 0;
     public int $create_maks_tenor = 0;
     public float $create_estimasi_bunga = 0;
+    public string $searchAnggota = '';
 
     // Approval modal
     public bool $showApproveModal = false;
@@ -69,6 +70,7 @@ class PengajuanPinjamanManagement extends Component
             'create_bunga_persen',
             'create_maks_tenor',
             'create_estimasi_bunga',
+            'searchAnggota',
         ]);
         $this->resetValidation();
         $this->showCreateModal = true;
@@ -271,7 +273,10 @@ class PengajuanPinjamanManagement extends Component
         return view('livewire.admin.pengajuan-pinjaman-management', [
             'pengajuans' => $pengajuans,
             'statusOptions' => StatusPengajuan::cases(),
-            'anggotaList' => Anggota::orderBy('nama_lengkap')->get(),
+            'anggotaList' => Anggota::when($this->searchAnggota, function ($q) {
+                $q->where('nama_lengkap', 'like', '%' . $this->searchAnggota . '%')
+                  ->orWhere('no_anggota', 'like', '%' . $this->searchAnggota . '%');
+            })->orderBy('nama_lengkap')->get(),
             'jenisPinjamanList' => JenisPinjaman::all(),
         ]);
     }
