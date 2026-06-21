@@ -49,7 +49,6 @@
                         <th>Bunga Total</th>
                         <th>Tgl Pengajuan</th>
                         <th>Status</th>
-                        <th style="width: 150px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,30 +77,6 @@
                                 <x-admin.badge :variant="$status->color()" :icon="$status->icon()">
                                     {{ $status->label() }}
                                 </x-admin.badge>
-                            </td>
-                            <td>
-                                @if ($status === \App\Enum\StatusPengajuan::PENDING)
-                                    <div class="d-flex gap-1">
-                                        <button class="action-btn" style="color: var(--success-color);"
-                                            wire:click="openApproveModal({{ $p->id }})" title="Setujui">
-                                            <i class="fas fa-check"></i> Setujui
-                                        </button>
-                                        <button class="action-btn" style="color: var(--danger-color);"
-                                            wire:click="openRejectModal({{ $p->id }})" title="Tolak">
-                                            <i class="fas fa-times"></i> Tolak
-                                        </button>
-                                    </div>
-                                @elseif ($status === \App\Enum\StatusPengajuan::DISETUJUI)
-                                    <small class="text-muted">
-                                        Cair:
-                                        {{ $p->tgl_cair ? \Carbon\Carbon::parse($p->tgl_cair)->format('d M Y') : '-' }}<br>
-                                        Rp {{ number_format($p->jumlah_disetujui, 0, ',', '.') }}
-                                    </small>
-                                @elseif ($status === \App\Enum\StatusPengajuan::DITOLAK)
-                                    <small style="color: var(--danger-color);">{{ $p->alasan_tolak }}</small>
-                                @else
-                                    <small class="text-muted">-</small>
-                                @endif
                             </td>
                         </tr>
                     @empty
