@@ -336,6 +336,8 @@
                 <li><a href="{{ route('home')}}#home" class="active"><i class="fas fa-home"></i> Beranda</a></li>
                 <li><a href="{{ route('home')}}#features"><i class="fas fa-concierge-bell"></i> Layanan</a></li>
                 <li><a href="{{ route('home')}}#syarat-anggota"><i class="fas fa-clipboard-list"></i> Syarat Anggota</a></li>
+                <li><a href="{{ route('home')}}#prosedur-pinjaman"><i class="fas fa-file-invoice-dollar"></i> Prosedur Pinjaman</a></li>
+                <li><a href="{{ route('home')}}#ketentuan-simpanan"><i class="fas fa-piggy-bank"></i> Ketentuan Simpanan</a></li>
                 <!-- <li><a href="#stats"><i class="fas fa-chart-bar"></i> Statistik</a></li> -->
             </ul>
 

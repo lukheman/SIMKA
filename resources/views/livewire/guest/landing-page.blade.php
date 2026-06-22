@@ -116,6 +116,153 @@
         </div>
     </section>
 
+    <!-- Prosedur Pinjaman Section -->
+    <section class="section" id="prosedur-pinjaman">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Prosedur Pinjaman</h2>
+                <p class="section-desc">Tata cara dan persyaratan pengajuan pinjaman di CU Mentari Kasih</p>
+            </div>
+            <div class="requirements-card">
+                <ol class="requirements-list">
+                    <li>
+                        <div class="req-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="req-text">Mengisi form. Permohonan Pinjaman, Rancangan Keuangan Keluarga (RKK) dan dokumen kredit lainnya.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-user-friends"></i></div>
+                        <div class="req-text">Form. Permohonan Pinjaman ditandatangani minimal 2 (dua) orang penjamin. Keduanya bukan suami-istri, saudara, atau anggota yang tinggal se-rumah.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-user-shield"></i></div>
+                        <div class="req-text">Suami/istri tidak dapat menjadi penjamin pasangannya sendiri. Hanya bertanda tangan pada bagian mengetahui sebagai bukti persetujuan pasangan.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="req-text">Melampirkan fotocopy KTP suami/istri (bagi yang sudah berkeluarga).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <div class="req-text">Telah mengikuti Edukasi Dasar.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="req-text">Telah mengikuti Diklat Financial Literacy (bagi calon peminjam ganda).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="req-text">Telah menabung secara aktif minimal selama 6 bulan.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-percent"></i></div>
+                        <div class="req-text">Pencairan pinjaman dikenakan biaya administrasi pinjaman sebesar 1,5% dari pinjaman.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-clock"></i></div>
+                        <div class="req-text">Pinjaman tidak mendadak kecuali pinjaman dibawah atau sebesar simpanan.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-user-clock"></i></div>
+                        <div class="req-text">Pengajuan pinjaman diatas simpanan untuk anggota berusia 65 tahun ke atas, diatur agar lunas sebelum berusia 70 tahun.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div class="req-text">Anggota berumur 70 tahun ke atas hanya dapat meminjam maksimal sebesar simpanan dan tidak dilindungi asuransi.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-star"></i></div>
+                        <div class="req-text">Anggota baru dapat melakukan pinjaman perdana berupa Pinjaman Modal Tabungan (PMT) dan Pinjaman Modal Tabungan II (PMT II).</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="req-text">Anggota lama yang belum mengikuti Edukasi Dasar hanya dapat meminjam maksimal sebesar simpanannya.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-calculator"></i></div>
+                        <div class="req-text">Simpanan suami/istri dan anak yang masih dalam tanggungan dapat ditambahkan untuk menghitung syarat minimal 20% tabungan untuk pengajuan pinjaman dengan ketentuan Simpanan AP minimal 15%.</div>
+                    </li>
+                </ol>
+                <div class="prosedur-note">
+                    <i class="fas fa-info-circle"></i>
+                    <span><strong><em>Syarat dan ketentuan berlaku untuk semua produk pinjaman</em></strong></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ketentuan Umum Produk Simpanan Section -->
+    <section class="section" id="ketentuan-simpanan">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ketentuan Umum Produk Simpanan</h2>
+                <p class="section-desc">Aturan dan ketentuan yang berlaku untuk seluruh produk simpanan anggota</p>
+            </div>
+            <div class="requirements-card">
+                <ul class="ketentuan-list">
+                    <li>
+                        <div class="req-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="req-text">BJS dibukukan setiap akhir bulan.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="req-text">Anggota yang menerima bunga simpanan sebesar Rp240.000 ke atas per bulan wajib membayar PPh pasal 4 ayat 2 sebesar 10%.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-coins"></i></div>
+                        <div class="req-text">Pembayaran pajak PPh pasal 4 ayat 2 sebesar 10% ditarik dari simpanan Jagona.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-ban"></i></div>
+                        <div class="req-text">Simpanan tidak dapat dipindahtangankan atau dialihkan kepada pihak lain.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-file-signature"></i></div>
+                        <div class="req-text">Penarikan simpanan tidak dapat diwakilkan kecuali dengan melampirkan surat kuasa.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="req-text">Penarikan simpanan ≥ Rp1.000.000 wajib melampirkan fotocopy KTP.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="req-text">Penyetoran tunai pada hari sabtu maksimal Rp1.000.000.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-book"></i></div>
+                        <div class="req-text">Penggantian buku yang hilang atau rusak atau penutupan rekening dikenakan biaya Rp15.000.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="req-text">CUMKS mengikuti program asuransi untuk melindungi Simpanan Anggota. Simpanan Anggota CUMKS yang dilindungi adalah Simpanan Kepemilikan (Pokok dan Wajib), Jagona, Jagona Senior, Jagona Junior, SIFASKES, SIMAK, Simpanan Hari Tua Anggota dan Simpanan DHTS.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-heart"></i></div>
+                        <div class="req-text">Apabila anggota meninggal maka ahli waris akan menerima santunan sesuai ketentuan yang berlaku.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="req-text">Simpanan Jagona dan simpanan lainnya kecuali Sipanda, yang sudah mengendap minimal 3 bulan dapat ditarik dan dipindahkan ke simpanan lainnya apabila anggota yang bersangkutan hendak meminjam dengan memanfaatkan pinjaman yang berpadanan.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-child"></i></div>
+                        <div class="req-text">ALB hanya diperbolehkan memiliki simpanan kepemilikan (pokok dan wajib), Jagona Junior, Sipena, Simpanan Hari Tua Anggota dan Gemilang.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-lock"></i></div>
+                        <div class="req-text">Penarikan simpanan yang dijadikan jaminan atau padanan pinjaman tidak dapat dilakukan apabila saldo simpanan ≤ saldo pinjaman.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-users"></i></div>
+                        <div class="req-text">Simpanan anggota yang telah meninggal dunia hanya diberikan kepada ahli waris yang sah sesuai dengan dokumen SPMA.</div>
+                    </li>
+                    <li>
+                        <div class="req-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="req-text">BJS sewaktu-waktu dapat berubah sesuai dengan kondisi perekonomian nasional dan international.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <!-- Stats Section -->
     <section class="section stats-section" id="stats">
@@ -341,6 +488,72 @@
                 color: var(--text-primary);
                 line-height: 1.6;
                 padding-top: 2px;
+            }
+
+            /* Prosedur Note */
+            .prosedur-note {
+                margin-top: 1.5rem;
+                padding: 1rem 1.25rem;
+                border-radius: 10px;
+                background: rgba(212, 96, 138, 0.08);
+                border: 1px solid rgba(212, 96, 138, 0.2);
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                color: var(--primary-color);
+                font-size: 0.95rem;
+            }
+
+            .prosedur-note i {
+                font-size: 1.1rem;
+                flex-shrink: 0;
+            }
+
+            /* Ketentuan List (bullet style) */
+            .ketentuan-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .ketentuan-list li {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+                border-radius: 10px;
+                background: var(--bg-color, var(--bg-light));
+                border: 1px solid var(--border-color);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .ketentuan-list li:hover {
+                transform: translateX(4px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            [data-theme="dark"] .ketentuan-list li:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            }
+
+            .ketentuan-list li::before {
+                content: '•';
+                min-width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                font-size: 1.2rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 1px;
+                line-height: 1;
             }
 
             /* Stats */
