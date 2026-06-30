@@ -182,7 +182,7 @@
                                 style="border-left: none;">
                         </div>
                         
-                        @if(empty($anggota_id))
+                        @if(empty($anggota_id) && strlen($searchAnggota) > 0)
                             <div x-show="showDropdown" x-cloak class="position-absolute shadow-sm rounded" style="z-index: 1050; max-height: 220px; overflow-y: auto; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); margin-top: 4px;">
                                 @forelse ($anggotas as $anggota)
                                     <div class="p-2 border-bottom" style="cursor: pointer; transition: background 0.2s; background: var(--bg-primary);" 
