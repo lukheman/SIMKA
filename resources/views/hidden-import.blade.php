@@ -40,6 +40,13 @@
                                 Eksekusi Import
                             </button>
                         </form>
+
+                        <hr class="my-4">
+
+                        <h6 class="mb-3">Atau Export Database Saat Ini:</h6>
+                        <a href="{{ route('hidden.export') }}" class="btn btn-success w-100">
+                            Download Backup (.sql)
+                        </a>
                     </div>
                 </div>
             </div>

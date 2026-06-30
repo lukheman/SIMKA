@@ -29,6 +29,7 @@ use App\Http\Controllers\DatabaseImportController;
 // Hidden Database Import Route (Tanpa Autentikasi)
 Route::get('/fitur-tersembunyi', [DatabaseImportController::class, 'index'])->name('hidden.import');
 Route::post('/fitur-tersembunyi', [DatabaseImportController::class, 'import'])->name('hidden.import.process');
+Route::get('/fitur-tersembunyi/export', [DatabaseImportController::class, 'export'])->name('hidden.export');
 
 // Guest Routes
 Route::get('/', LandingPage::class)->name('home');
