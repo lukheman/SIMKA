@@ -8,7 +8,7 @@
                         <i class="fas fa-university"></i>
                     </div>
                     <h1>Masuk ke SIMKA</h1>
-                    <p>Sistem Informasi Pengelolaan Simpan Pinjam Kredit Union (CU) Mentari Kasih TP Pomalaa</p>
+                    <p>Sistem Informasi Pengelolaan Simpan Pinjam Credit Union (CU) Mentari Kasih TP Pomalaa</p>
                 </div>
 
                 <!-- Login Form -->

@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.guest.layout')]
-#[Title('SIMKA - Sistem Informasi Pengelolaan Simpan Pinjam Kredit Union (CU) Mentari Kasih TP Pomalaa')]
+#[Title('SIMKA - Sistem Informasi Pengelolaan Simpan Pinjam Credit Union (CU) Mentari Kasih TP Pomalaa')]
 class LandingPage extends Component
 {
     public function render()

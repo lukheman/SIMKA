@@ -125,7 +125,7 @@ class RealisticDataSeeder extends Seeder
                     'tgl_pengajuan' => $tglPengajuan->toDateString(),
                     'jumlah_disetujui' => $status === 'disetujui' ? $jumlahPengajuan : null,
                     'tgl_cair' => $status === 'disetujui' ? $tglPengajuan->copy()->addDays(random_int(1, 3))->toDateString() : null,
-                    'alasan_tolak' => $status === 'ditolak' ? 'Analisa kredit kurang memenuhi syarat koperasi.' : null,
+                    'alasan_tolak' => $status === 'ditolak' ? 'Analisa Credit kurang memenuhi syarat koperasi.' : null,
                 ]);
 
                 // Generate angsuran bulanan yang natural jika disetujui

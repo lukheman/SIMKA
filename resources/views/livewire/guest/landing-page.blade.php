@@ -5,7 +5,7 @@
             <div class="hero-content">
                 <p class="hero-label">CU Mentari Kasih TP Pomalaa</p>
                 <h1 class="hero-title">
-                    Sistem Informasi Pengelolaan <span class="highlight">Simpan Pinjam</span> Kredit Union (CU) Mentari
+                    Sistem Informasi Pengelolaan <span class="highlight">Simpan Pinjam</span> Credit Union (CU) Mentari
                     Kasih TP Pomalaa
                 </h1>
                 <p class="hero-desc">
@@ -127,7 +127,7 @@
                 <ol class="requirements-list">
                     <li>
                         <div class="req-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="req-text">Mengisi form. Permohonan Pinjaman, Rancangan Keuangan Keluarga (RKK) dan dokumen kredit lainnya.</div>
+                        <div class="req-text">Mengisi form. Permohonan Pinjaman, Rancangan Keuangan Keluarga (RKK) dan dokumen Credit lainnya.</div>
                     </li>
                     <li>
                         <div class="req-icon"><i class="fas fa-user-friends"></i></div>

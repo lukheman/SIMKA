@@ -1,6 +1,6 @@
 @props([
-    'title' => 'SIMKA - Sistem Informasi Pengelolaan Simpan Pinjam Kredit Union (CU) Mentari Kasih TP Pomalaa',
-    'description' => 'Sistem Informasi Pengelolaan Simpan Pinjam Kredit Union (CU) Mentari Kasih TP Pomalaa',
+    'title' => 'SIMKA - Sistem Informasi Pengelolaan Simpan Pinjam Credit Union (CU) Mentari Kasih TP Pomalaa',
+    'description' => 'Sistem Informasi Pengelolaan Simpan Pinjam Credit Union (CU) Mentari Kasih TP Pomalaa',
 ])
 
 <!DOCTYPE html>
