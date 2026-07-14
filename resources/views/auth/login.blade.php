@@ -1,4 +1,6 @@
-<div>
+<x-guest.layout>
+    <x-slot:title>Login - SIMKA</x-slot:title>
+
     <section class="login-section">
         <div class="container">
             <div class="login-card">
@@ -12,14 +14,16 @@
                 </div>
 
                 <!-- Login Form -->
-                <form wire:submit="submit">
+                <form action="{{ route('login.post') }}" method="POST">
+                    @csrf
+                    
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-wrapper">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" wire:model="email"
+                            <input type="email" name="email" value="{{ old('email') }}"
                                 class="form-input @error('email') is-invalid @enderror" id="email"
-                                placeholder="nama@email.com" autofocus>
+                                placeholder="nama@email.com" autofocus required>
                         </div>
                         @error('email')
                             <span class="error-text">{{ $message }}</span>
@@ -30,9 +34,9 @@
                         <label for="password" class="form-label">Password</label>
                         <div class="input-wrapper">
                             <i class="fas fa-lock"></i>
-                            <input type="password" wire:model="password"
+                            <input type="password" name="password"
                                 class="form-input @error('password') is-invalid @enderror" id="password"
-                                placeholder="••••••••">
+                                placeholder="••••••••" required>
                             <button type="button" class="toggle-password" onclick="togglePassword()">
                                 <i class="fas fa-eye" id="toggleIcon"></i>
                             </button>
@@ -42,11 +46,8 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn-submit mt-2" wire:loading.attr="disabled">
-                        <span wire:loading.remove>Masuk <i class="fas fa-arrow-right"></i></span>
-                        <span wire:loading>
-                            <i class="fas fa-spinner fa-spin me-1"></i> Memproses...
-                        </span>
+                    <button type="submit" class="btn-submit mt-2">
+                        Masuk <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
 
@@ -252,4 +253,4 @@
             }
         </script>
     </x-slot:scripts>
-</div>
+</x-guest.layout>

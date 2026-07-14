@@ -35,7 +35,10 @@ Route::get('/fitur-tersembunyi/export', [DatabaseImportController::class, 'expor
 Route::get('/', LandingPage::class)->name('home');
 
 // Auth Routes
-Route::get('/login', Login::class)->name('login');
+use App\Http\Controllers\Auth\LoginController;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::get('/register', Register::class)->name('register');
 
 // Admin Routes
