@@ -42,14 +42,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-options">
-                        <label class="checkbox-label">
-                            <input type="checkbox" wire:model="remember">
-                            <span>Ingat saya</span>
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-submit" wire:loading.attr="disabled">
+                    <button type="submit" class="btn-submit mt-2" wire:loading.attr="disabled">
                         <span wire:loading.remove>Masuk <i class="fas fa-arrow-right"></i></span>
                         <span wire:loading>
                             <i class="fas fa-spinner fa-spin me-1"></i> Memproses...
@@ -188,28 +181,6 @@
                 font-size: 0.8rem;
                 color: #d45d5d;
                 margin-top: 0.3rem;
-            }
-
-            .form-options {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.5rem;
-            }
-
-            .checkbox-label {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 0.85rem;
-                color: var(--text-secondary);
-                cursor: pointer;
-            }
-
-            .checkbox-label input {
-                accent-color: var(--primary-color);
-                width: 16px;
-                height: 16px;
             }
 
             .btn-submit {

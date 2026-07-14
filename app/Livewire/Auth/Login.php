@@ -19,20 +19,18 @@ class Login extends Component
     #[Rule([])]
     public string $password = '';
 
-    public bool $remember = false;
-
     public function submit()
     {
         $credentials = $this->validate();
 
         // Try admin/user login first
-        if (Auth::guard('web')->attempt($credentials, $this->remember)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             session()->regenerate();
             return redirect()->to(route('dashboard'));
         }
 
         // Try anggota login
-        if (Auth::guard('anggota')->attempt($credentials, $this->remember)) {
+        if (Auth::guard('anggota')->attempt($credentials)) {
             session()->regenerate();
             return redirect()->to(route('anggota.dashboard'));
         }
