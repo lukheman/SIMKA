@@ -11,7 +11,6 @@ use App\Livewire\Admin\PengajuanPinjamanManagement;
 use App\Livewire\Admin\TransaksiSimpananManagement;
 use App\Livewire\Admin\AngsuranManagement;
 use App\Livewire\Admin\Profile;
-use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Guest\LandingPage;
 use App\Livewire\Anggota\AnggotaDashboard;
