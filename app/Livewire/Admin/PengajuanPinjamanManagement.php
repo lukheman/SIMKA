@@ -38,15 +38,16 @@ class PengajuanPinjamanManagement extends Component
     public float $create_estimasi_bunga = 0;
     public string $searchAnggota = '';
 
-    // Approval modal
-    public bool $showApproveModal = false;
-    public ?int $approvingId = null;
-    public string $jumlah_disetujui = '';
+    // Approval modal state variables removed
 
     // Reject modal
     public bool $showRejectModal = false;
     public ?int $rejectingId = null;
     public string $alasan_tolak = '';
+
+    // Delete modal
+    public bool $showDeleteModal = false;
+    public ?int $deletingId = null;
 
     public function updatedSearch(): void
     {
@@ -191,59 +192,6 @@ class PengajuanPinjamanManagement extends Component
 
     // === Approve / Reject methods ===
 
-    public function openApproveModal(int $id): void
-    {
-        $pengajuan = PengajuanPinjaman::findOrFail($id);
-        $this->approvingId = $id;
-        $this->jumlah_disetujui = (string) $pengajuan->jumlah_pengajuan;
-        $this->showApproveModal = true;
-    }
-
-    public function approve(): void
-    {
-        $this->validate([
-            'jumlah_disetujui' => ['required', 'numeric', 'min:1'],
-        ]);
-
-        $pengajuan = PengajuanPinjaman::findOrFail($this->approvingId);
-        $pengajuan->update([
-            'jumlah_disetujui' => (float) $this->jumlah_disetujui,
-            'status' => StatusPengajuan::DISETUJUI->value,
-            'tgl_cair' => now()->toDateString(),
-        ]);
-
-        // Auto-generate angsuran records
-        $jumlahDisetujui = (float) $this->jumlah_disetujui;
-        $tenor = $pengajuan->tenor_bulan;
-        $bungaTotal = (float) $pengajuan->bunga_total;
-        $pokokPerBulan = round($jumlahDisetujui / $tenor, 2);
-        $bungaPerBulan = round($bungaTotal / $tenor, 2);
-        $tglCair = now();
-
-        for ($i = 1; $i <= $tenor; $i++) {
-            Angsuran::create([
-                'pengajuan_pinjaman_id' => $pengajuan->id,
-                'angsuran_ke' => $i,
-                'tgl_jatuh_tempo' => $tglCair->copy()->addMonths($i)->toDateString(),
-                'jumlah_pokok' => $pokokPerBulan,
-                'jumlah_bunga' => $bungaPerBulan,
-            ]);
-        }
-
-        Notifikasi::create([
-            'anggota_id' => $pengajuan->anggota_id,
-            'judul' => 'Pinjaman Disetujui',
-            'pesan' => 'Pengajuan pinjaman Anda sebesar Rp ' . number_format($jumlahDisetujui, 0, ',', '.') . ' telah disetujui. Jadwal angsuran telah dibuat.',
-            'tipe' => TipeNotifikasi::SUKSES,
-            'link' => route('anggota.pengajuan-pinjaman'),
-        ]);
-
-        $this->showApproveModal = false;
-        $this->approvingId = null;
-        $this->jumlah_disetujui = '';
-        session()->flash('success', 'Pengajuan pinjaman berhasil disetujui.');
-    }
-
     public function openRejectModal(int $id): void
     {
         $this->rejectingId = $id;
@@ -277,13 +225,30 @@ class PengajuanPinjamanManagement extends Component
         session()->flash('success', 'Pengajuan pinjaman telah ditolak.');
     }
 
+    public function openDeleteModal(int $id): void
+    {
+        $this->deletingId = $id;
+        $this->showDeleteModal = true;
+    }
+
+    public function delete(): void
+    {
+        if (!$this->deletingId) return;
+
+        $pengajuan = PengajuanPinjaman::findOrFail($this->deletingId);
+        $pengajuan->delete();
+
+        $this->closeModal();
+        session()->flash('success', 'Pengajuan pinjaman berhasil dihapus.');
+    }
+
     public function closeModal(): void
     {
         $this->showCreateModal = false;
-        $this->showApproveModal = false;
         $this->showRejectModal = false;
-        $this->approvingId = null;
+        $this->showDeleteModal = false;
         $this->rejectingId = null;
+        $this->deletingId = null;
         $this->resetValidation();
     }
 

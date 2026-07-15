@@ -49,6 +49,7 @@
                         <th>Bunga Total</th>
                         <th>Tgl Pengajuan</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,23 @@
                                 <x-admin.badge :variant="$status->color()" :icon="$status->icon()">
                                     {{ $status->label() }}
                                 </x-admin.badge>
+                                @if ($p->alasan_tolak)
+                                    <br><small class="text-muted" title="{{ $p->alasan_tolak }}"><i class="fas fa-info-circle"></i> {{ Str::limit($p->alasan_tolak, 20) }}</small>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if ($status === \App\Enum\StatusPengajuan::PENDING)
+                                        <button class="action-btn" style="color: var(--danger-color);"
+                                            wire:click="openRejectModal({{ $p->id }})" title="Tolak">
+                                            <i class="fas fa-times"></i> Tolak
+                                        </button>
+                                    @endif
+                                    <button class="action-btn" style="color: var(--danger-color);"
+                                        wire:click="openDeleteModal({{ $p->id }})" title="Hapus">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -257,43 +275,6 @@
         </div>
     @endif
 
-    {{-- Approve Modal --}}
-    @if ($showApproveModal)
-        <div class="modal-backdrop-custom" wire:click.self="closeModal">
-            <div class="modal-content-custom" wire:click.stop>
-                <div class="modal-header-custom">
-                    <h5 class="modal-title-custom">
-                        <i class="fas fa-check-circle me-2" style="color: var(--success-color);"></i>Setujui Pengajuan
-                    </h5>
-                    <button type="button" class="modal-close-btn" wire:click="closeModal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <form wire:submit="approve">
-                    <div class="mb-3">
-                        <label for="jumlah_disetujui" class="form-label">Jumlah Disetujui (Rp) <span
-                                style="color: var(--danger-color);">*</span></label>
-                        <input type="number" class="form-control @error('jumlah_disetujui') is-invalid @enderror"
-                            id="jumlah_disetujui" wire:model="jumlah_disetujui"
-                            placeholder="Masukkan jumlah yang disetujui">
-                        @error('jumlah_disetujui')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <small class="text-muted">Tanggal pencairan akan otomatis diisi hari ini.</small>
-                    </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="button" class="btn btn-modern"
-                            style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);"
-                            wire:click="closeModal">Batal</button>
-                        <button type="submit" class="btn btn-modern"
-                            style="background: var(--success-color); color: white; border: none;">
-                            <i class="fas fa-check me-2"></i>Setujui
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    @endif
 
     {{-- Reject Modal --}}
     @if ($showRejectModal)
@@ -327,6 +308,35 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    @endif
+
+    {{-- Delete Modal --}}
+    @if ($showDeleteModal)
+        <div class="modal-backdrop-custom" wire:click.self="closeModal">
+            <div class="modal-content-custom" wire:click.stop style="max-width: 450px;">
+                <div class="modal-header-custom">
+                    <h5 class="modal-title-custom"><i class="fas fa-trash-alt me-2"
+                            style="color: var(--danger-color);"></i>Hapus Pengajuan</h5>
+                    <button type="button" class="modal-close-btn" wire:click="closeModal"><i
+                            class="fas fa-times"></i></button>
+                </div>
+                <div class="p-3">
+                    <p style="font-size: 1.05rem; color: var(--text-primary);">Apakah Anda yakin ingin menghapus
+                        pengajuan pinjaman ini? Tindakan ini tidak dapat dibatalkan.</p>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-modern"
+                            style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary);"
+                            wire:click="closeModal">Batal</button>
+                        <button type="button" class="btn btn-modern" style="background: var(--danger-color); color: white;"
+                            wire:click="delete">
+                            <span wire:loading.remove wire:target="delete"><i class="fas fa-trash me-2"></i>Hapus</span>
+                            <span wire:loading wire:target="delete"><i
+                                    class="fas fa-spinner fa-spin me-2"></i>Menghapus...</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     @endif
