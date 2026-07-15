@@ -137,9 +137,9 @@
                             <i class="fas fa-calendar text-muted" style="width: 16px;"></i>
                             <span style="color: var(--text-secondary);">{{ Auth::user()->created_at->format('d M Y') }}</span>
                         </div>
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="fas fa-envelope text-muted" style="width: 16px;"></i>
-                            <span style="color: var(--text-secondary);">{{ Auth::user()->email_verified_at ? 'Verified' : 'Unverified' }}</span>
+                        <div class="info-group">
+                            <label>Email</label>
+                            <p>{{ Auth::user()->email }}</p>
                         </div>
                     </div>
 

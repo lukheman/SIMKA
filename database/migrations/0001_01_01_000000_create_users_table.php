@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('username')->unique()->nullable();
             $table->timestamps();
             $table->enum('role', \App\Enum\UserRole::values())->default(\App\Enum\UserRole::ADMIN);
         });
