@@ -17,7 +17,7 @@ class Anggota extends Authenticatable
 
     protected $guarded = ['id'];
 
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password'];
 
     protected function casts(): array
     {
