@@ -149,26 +149,44 @@ class PengajuanPinjamanManagement extends Component
         $jumlah = (float) $this->create_jumlah_pengajuan;
         $tenor = (int) $this->create_tenor_bulan;
 
-        PengajuanPinjaman::create([
+        $pengajuan = PengajuanPinjaman::create([
             'anggota_id' => $this->create_anggota_id,
             'jenis_pinjaman_id' => $this->create_jenis_pinjaman_id,
             'jumlah_pengajuan' => $jumlah,
+            'jumlah_disetujui' => $jumlah,
             'tenor_bulan' => $tenor,
             'bunga_total' => $this->create_estimasi_bunga,
-            'status' => 'pending',
+            'status' => StatusPengajuan::DISETUJUI->value,
             'tgl_pengajuan' => now()->toDateString(),
+            'tgl_cair' => now()->toDateString(),
         ]);
+
+        // Auto-generate angsuran records
+        $bungaTotal = (float) $pengajuan->bunga_total;
+        $pokokPerBulan = round($jumlah / $tenor, 2);
+        $bungaPerBulan = round($bungaTotal / $tenor, 2);
+        $tglCair = now();
+
+        for ($i = 1; $i <= $tenor; $i++) {
+            Angsuran::create([
+                'pengajuan_pinjaman_id' => $pengajuan->id,
+                'angsuran_ke' => $i,
+                'tgl_jatuh_tempo' => $tglCair->copy()->addMonths($i)->toDateString(),
+                'jumlah_pokok' => $pokokPerBulan,
+                'jumlah_bunga' => $bungaPerBulan,
+            ]);
+        }
 
         Notifikasi::create([
             'anggota_id' => $this->create_anggota_id,
-            'judul' => 'Pengajuan Pinjaman Baru',
-            'pesan' => 'Admin telah membuat pengajuan pinjaman sebesar Rp ' . number_format($jumlah, 0, ',', '.') . ' atas nama Anda.',
-            'tipe' => TipeNotifikasi::INFO,
+            'judul' => 'Pinjaman Disetujui',
+            'pesan' => 'Admin telah menambahkan dan menyetujui pinjaman sebesar Rp ' . number_format($jumlah, 0, ',', '.') . ' atas nama Anda.',
+            'tipe' => TipeNotifikasi::SUKSES,
             'link' => route('anggota.pengajuan-pinjaman'),
         ]);
 
         $this->showCreateModal = false;
-        session()->flash('success', 'Pengajuan pinjaman berhasil dibuat.');
+        session()->flash('success', 'Pinjaman berhasil ditambahkan dan langsung disetujui.');
     }
 
     // === Approve / Reject methods ===
