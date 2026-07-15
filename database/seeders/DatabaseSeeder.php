@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::create([
+        User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => 'password123',
             'role' => UserRole::ADMIN,
         ]);
 
-        User::create([
+        User::factory()->create([
             'name' => 'Admin',
             'email' => 'pimpinan@gmail.com',
             'password' => 'password123',
@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            /* AnggotaSeeder::class, */
+            AnggotaSeeder::class,
             JenisSimpananSeeder::class,
             JenisPinjamanSeeder::class,
-            /* RealisticDataSeeder::class, */
+            RealisticDataSeeder::class,
         ]);
     }
 }
